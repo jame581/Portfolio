@@ -10,21 +10,91 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none">Clarence Taylor</span>
+        <span class="d-block d-lg-none">Jan Mesarč</span>
         <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/profile.jpg" alt="My profile image" /></span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
-        </ul>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#about" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-address-card"></i> About
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#experience" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-briefcase"></i> Experience
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#projects" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-diagram-project"></i> Projects
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#education" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-graduation-cap"></i> Education
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#skills" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-kitchen-set"></i> Skills
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="#interests" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-timeline"></i> Interests
+                </NavLink>
+            </li>
+            @*<hr />*@
+@*            <li class="nav-item">
+                <NavLink class="nav-link" href="#interests" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-timeline"></i> Interests
+                </NavLink>
+            </li>*@
+        </ul>       
+    </div>
+    <div class="d-none d-lg-block p-2">
+        <a class="social-icon" target="_blank" rel="noopener" href="https://www.buymeacoffee.com/jame581">
+            <img class="img-fluid" src="assets/black-button.png" alt="Buy me a coffe" />
+        </a>
     </div>
 </nav>
+
+@*<div class="@NavMenuCssClass nav-scrollable navbar navbar-expand-lg navbar-dark bg-primary fixed-top" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="#about">
+                <span class="oi oi-plus" aria-hidden="true"></span> About
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="#experience">
+                <span class="oi oi-plus" aria-hidden="true"></span> Experience
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="d-none d-lg-block">
+            <a class="social-icon" target="_blank" rel="noopener" href="https://www.buymeacoffee.com/jame581">
+                <img class="img-fluid" src="assets/black-button.png" alt="Buy me a coffe" />
+            </a>
+        </div>
+    </nav>
+</div>*@
 
 @code {
     private bool collapseNavMenu = true;

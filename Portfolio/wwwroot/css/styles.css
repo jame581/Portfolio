@@ -12412,7 +12412,11 @@ body {
 }
 
 @media (min-width: 992px) {
-    body {
+    body{
+        padding-top: 0;
+    }
+    
+    main {
         padding-top: 0;
         padding-left: 17rem;
     }

@@ -37,13 +37,15 @@
                     <i class="fa-solid fa-timeline"></i> Interests
                 </NavLink>
             </li>
-            @*<hr />*@
-@*            <li class="nav-item">
-                <NavLink class="nav-link" href="#interests" Match="NavLinkMatch.All">
-                    <i class="fa-solid fa-timeline"></i> Interests
+            <li>
+                <hr style="color: white" />
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="fetchgithubdata" Match="NavLinkMatch.All">
+                    <i class="fa-brands fa-github-alt"></i> Public Repositories
                 </NavLink>
-            </li>*@
-        </ul>       
+            </li>
+        </ul>
     </div>
     <div class="d-none d-lg-block p-2">
         <a class="social-icon" target="_blank" rel="noopener" href="https://www.buymeacoffee.com/jame581">
@@ -51,41 +53,6 @@
         </a>
     </div>
 </nav>
-
-@*<div class="@NavMenuCssClass nav-scrollable navbar navbar-expand-lg navbar-dark bg-primary fixed-top" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="#about">
-                <span class="oi oi-plus" aria-hidden="true"></span> About
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="#experience">
-                <span class="oi oi-plus" aria-hidden="true"></span> Experience
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-        <div class="d-none d-lg-block">
-            <a class="social-icon" target="_blank" rel="noopener" href="https://www.buymeacoffee.com/jame581">
-                <img class="img-fluid" src="assets/black-button.png" alt="Buy me a coffe" />
-            </a>
-        </div>
-    </nav>
-</div>*@
 
 @code {
     private bool collapseNavMenu = true;

@@ -33,4 +33,4 @@ The portfolio website is built using the following technologies:
 
 ## License
 
-This project is licensed under the (MIT License)[https://github.com/jame581/Portfolio/blob/master/LICENSE.txt]. You are free to modify and use the code as per the terms of this license.
+This project is licensed under the [MIT License](https://github.com/jame581/Portfolio/blob/master/LICENSE.txt). You are free to modify and use the code as per the terms of this license.

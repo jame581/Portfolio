@@ -1,0 +1,35 @@
+name: Portfolio Deployment
+
+# Run workflow on every push to the master branch
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+    # uses GitHubs checkout action to checkout from the master branch
+    - uses: actions/checkout@v2
+    
+    # sets up .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0
+
+    # publishes Blazor project to the release-folder
+    - name: Publish .NET Project
+      run: dotnet publish Portfolio.csproj -c Release -o release --nologo
+      
+    # changes the base-tag in index.html from '/' to 'Portfolio' to match GitHub Pages repository subdirectory
+    - name: Change base-tag in index.html from / to Portfolio
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Portfolio\/" \/>/g' release/wwwroot/index.htm    
+      
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.4.2
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: release/wwwroot
+      

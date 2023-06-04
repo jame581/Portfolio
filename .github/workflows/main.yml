@@ -24,7 +24,7 @@ jobs:
       
     # changes the base-tag in index.html from '/' to 'Portfolio' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to Portfolio
-      run: sed -i 's/<base href="\/" \/>/<base href="\/Portfolio\/" \/>/g' Portfolio/Release/wwwroot/index.htm    
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Portfolio\/" \/>/g' Portfolio/Release/wwwroot/index.html    
       
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.2

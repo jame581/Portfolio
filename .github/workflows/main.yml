@@ -20,11 +20,11 @@ jobs:
 
     # publishes Blazor project to the release-folder
     - name: Publish .NET Project
-      run: dotnet publish Portfolio/Portfolio.csproj -c Release -o release --nologo
+      run: dotnet publish Portfolio/Portfolio.csproj -c Release -o Release --nologo
       
     # changes the base-tag in index.html from '/' to 'Portfolio' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to Portfolio
-      run: sed -i 's/<base href="\/" \/>/<base href="\/Portfolio\/" \/>/g' release/wwwroot/index.htm    
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Portfolio\/" \/>/g' Portfolio/Release/wwwroot/index.htm    
       
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.2

@@ -10,32 +10,32 @@
     <div class="@NavMenuCssClass navbar-collapse">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <NavLink class="nav-link" href="#about" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#about" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-address-card"></i> About
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="#experience" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#experience" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-briefcase"></i> Experience
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="#projects" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#projects" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-diagram-project"></i> Projects
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="#education" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#education" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-graduation-cap"></i> Education
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="#skills" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#skills" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-kitchen-set"></i> Skills
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="#interests" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#interests" Match="NavLinkMatch.All">
                     <i class="fa-solid fa-timeline"></i> Interests
                 </NavLink>
             </li>
@@ -43,7 +43,7 @@
                 <hr style="color: white" />
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="fetchgithubdata" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" data-toggle="collapse" href="fetchgithubdata" Match="NavLinkMatch.All">
                     <i class="fa-brands fa-github-alt"></i> Public Repositories
                 </NavLink>
             </li>
@@ -64,5 +64,13 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleNavMenuMobile()
+    {
+        if (!collapseNavMenu)
+        {
+            collapseNavMenu = true;
+        }
     }
 }

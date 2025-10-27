@@ -43,6 +43,26 @@ body {
     background-attachment: fixed;
 }
 
+/* Override Bootstrap primary colors for sidebar */
+.navbar.bg-primary {
+    background: linear-gradient(180deg, #1a1f3a 0%, #252d47 100%) !important;
+    border-right: 3px solid var(--neon-purple);
+    box-shadow: 2px 0 15px rgba(179, 0, 255, 0.2);
+}
+
+.navbar-dark.bg-primary .navbar-brand {
+    color: var(--neon-cyan) !important;
+}
+
+.navbar-dark.bg-primary .nav-link {
+    color: var(--text-secondary) !important;
+}
+
+.navbar-dark.bg-primary .nav-link:hover,
+.navbar-dark.bg-primary .nav-link.active {
+    color: var(--neon-cyan) !important;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
     width: 12px;

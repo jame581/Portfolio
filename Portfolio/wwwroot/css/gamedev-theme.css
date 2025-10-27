@@ -1,0 +1,518 @@
+/* ============================================
+   GAME DEV PORTFOLIO THEME
+   Dark theme with neon accents, glowing effects
+   ============================================ */
+
+:root {
+    /* Neon color palette */
+    --neon-cyan: #00f0ff;
+    --neon-purple: #b300ff;
+    --neon-pink: #ff006e;
+    --neon-green: #00ff00;
+    --neon-orange: #ff6600;
+    --neon-blue: #0080ff;
+    
+    /* Dark backgrounds */
+    --dark-bg: #0a0e27;
+    --dark-bg-secondary: #1a1f3a;
+    --dark-bg-tertiary: #252d47;
+    
+    /* Text colors */
+    --text-primary: #ffffff;
+    --text-secondary: #b0b9d4;
+    --text-muted: #6b7fa1;
+    
+    /* Shadows and glows */
+    --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.5);
+    --glow-purple: 0 0 20px rgba(179, 0, 255, 0.5);
+    --glow-pink: 0 0 20px rgba(255, 0, 110, 0.5);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+html, body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    background-attachment: fixed;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-cyan);
+    border-radius: 6px;
+    box-shadow: var(--glow-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-purple);
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+h2 {
+    color: var(--neon-cyan);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--neon-cyan);
+    padding-bottom: 0.5rem;
+    text-shadow: var(--glow-cyan);
+}
+
+h3 {
+    color: var(--neon-purple);
+    font-size: 1.3rem;
+    text-shadow: var(--glow-purple);
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
+}
+
+a:hover {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+}
+
+/* ============================================
+   SECTION STYLING
+   ============================================ */
+
+.resume-section {
+    padding: 4rem 0;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    position: relative;
+}
+
+.resume-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--neon-cyan) 0%, transparent 100%);
+}
+
+.resume-section:nth-child(2n) {
+    background: linear-gradient(90deg, rgba(179, 0, 255, 0.05) 0%, transparent 100%);
+}
+
+.resume-section-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   CARDS & CONTAINERS
+   ============================================ */
+
+.experience-item,
+.education-item,
+.project-card,
+.skill-card {
+    background: var(--dark-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.experience-item::before,
+.education-item::before,
+.project-card::before,
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(179, 0, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.experience-item:hover,
+.education-item:hover,
+.project-card:hover,
+.skill-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan), inset 0 0 20px rgba(0, 240, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.experience-item:nth-child(odd):hover {
+    border-color: var(--neon-purple);
+    box-shadow: var(--glow-purple), inset 0 0 20px rgba(179, 0, 255, 0.1);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn-primary,
+.btn {
+    background: transparent;
+    border: 2px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    cursor: pointer;
+}
+
+.btn-primary:hover,
+.btn:hover {
+    background: var(--neon-cyan);
+    color: var(--dark-bg);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    transform: scale(1.05);
+}
+
+.btn-primary:focus,
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 30px rgba(0, 240, 255, 1);
+}
+
+/* ============================================
+   SOCIAL ICONS
+   ============================================ */
+
+.social-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-bg-secondary);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: var(--neon-cyan);
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    text-shadow: var(--glow-cyan);
+}
+
+.social-icon:hover {
+    background: var(--neon-cyan);
+    color: var(--dark-bg);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+    transform: scale(1.15) translateY(-5px);
+    text-shadow: none;
+}
+
+/* Alternate colors for each icon */
+.social-icon:nth-child(1):hover {
+    border-color: var(--neon-blue);
+    background: var(--neon-blue);
+    box-shadow: 0 0 25px rgba(0, 128, 255, 0.8);
+}
+
+.social-icon:nth-child(2):hover {
+    border-color: #1da1f2;
+    background: #1da1f2;
+    box-shadow: 0 0 25px rgba(29, 161, 242, 0.8);
+}
+
+.social-icon:nth-child(3):hover {
+    border-color: #1877f2;
+    background: #1877f2;
+    box-shadow: 0 0 25px rgba(24, 119, 242, 0.8);
+}
+
+.social-icon:nth-child(4):hover {
+    border-color: var(--neon-purple);
+    background: var(--neon-purple);
+    box-shadow: 0 0 25px rgba(179, 0, 255, 0.8);
+}
+
+.social-icon:nth-child(5):hover {
+    border-color: var(--neon-pink);
+    background: var(--neon-pink);
+    box-shadow: 0 0 25px rgba(255, 0, 110, 0.8);
+}
+
+.social-icon:nth-child(6):hover {
+    border-color: var(--neon-orange);
+    background: var(--neon-orange);
+    box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
+}
+
+/* ============================================
+   SUBHEADING & META INFO
+   ============================================ */
+
+.subheading {
+    color: var(--neon-cyan);
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-shadow: var(--glow-cyan);
+    margin-bottom: 1.5rem !important;
+}
+
+.resume-section-content > .subheading {
+    margin-bottom: 2rem !important;
+}
+
+.resume-date {
+    color: var(--neon-green);
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.mb-5, .mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* ============================================
+   SKILL TAGS & BADGES
+   ============================================ */
+
+.skill-badge,
+.tech-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(179, 0, 255, 0.1));
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+    margin: 0.3rem 0.3rem 0.3rem 0;
+    transition: all 0.3s ease;
+    cursor: default;
+    text-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
+}
+
+.skill-badge:hover,
+.tech-tag:hover {
+    background: var(--neon-cyan);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    transform: scale(1.1);
+    text-shadow: none;
+}
+
+/* Alternate colors */
+.skill-badge:nth-child(2n) {
+    border-color: var(--neon-purple);
+    color: var(--neon-purple);
+    background: linear-gradient(135deg, rgba(179, 0, 255, 0.1), rgba(255, 0, 110, 0.1));
+}
+
+.skill-badge:nth-child(2n):hover {
+    border-color: var(--neon-purple);
+    background: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(179, 0, 255, 0.6);
+}
+
+/* ============================================
+   HORIZONTAL RULES & DIVIDERS
+   ============================================ */
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 2rem 0;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+/* ============================================
+   NAVIGATION & ANCHOR
+   ============================================ */
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--neon-cyan);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--neon-cyan) !important;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   LEAD TEXT
+   ============================================ */
+
+.lead {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+strong {
+    color: var(--neon-cyan);
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* ============================================
+   EXPERIENCE/EDUCATION ITEMS
+   ============================================ */
+
+.experience-title,
+.education-title {
+    color: var(--neon-cyan);
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: var(--glow-cyan);
+}
+
+.experience-company,
+.education-school {
+    color: var(--neon-purple);
+    font-weight: bold;
+    text-shadow: var(--glow-purple);
+}
+
+/* ============================================
+   RESPONSIVENESS
+   ============================================ */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .resume-section {
+        padding: 2rem 0;
+    }
+
+    .social-icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+
+    .subheading {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes glow-pulse {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    }
+}
+
+@keyframes scan-lines {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 10px;
+    }
+}
+
+.glow-title {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading-progress circle {
+    stroke: var(--neon-cyan);
+}
+
+.loading-progress circle:last-child {
+    stroke: var(--neon-purple);
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+button:focus,
+a:focus,
+.btn:focus {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 2px;
+}

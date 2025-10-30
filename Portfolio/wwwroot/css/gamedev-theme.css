@@ -8,7 +8,7 @@
     --neon-cyan: #00f0ff;
     --neon-purple: #b300ff;
     --neon-pink: #ff006e;
-    --neon-green: #00ff00;
+    --neon-green: #39ff14;  /* Softened from pure green for better readability */
     --neon-orange: #ff6600;
     --neon-blue: #0080ff;
     
@@ -20,7 +20,7 @@
     /* Text colors */
     --text-primary: #ffffff;
     --text-secondary: #b0b9d4;
-    --text-muted: #6b7fa1;
+    --text-muted: #919DC2;
     
     /* Shadows and glows */
     --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.5);

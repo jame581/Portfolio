@@ -377,6 +377,7 @@ a:hover {
 .skill-badge:nth-child(2n):hover {
     border-color: var(--neon-purple);
     background: var(--neon-purple);
+    color: var(--dark-bg);
     box-shadow: 0 0 15px rgba(179, 0, 255, 0.6);
 }
 

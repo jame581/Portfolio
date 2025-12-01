@@ -123,13 +123,19 @@ main[b-p531rfodtv] {
         line-height: 3rem;
     }
 
+    .nav-item[b-p433wnmt7i]  a:focus,
+    .nav-item[b-p433wnmt7i]  a:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+
 .nav-item[b-p433wnmt7i]  a.active {
-    background-color: rgba(255,255,255,0.25);
+    background-color: transparent;
     color: white;
 }
 
 .nav-item[b-p433wnmt7i]  a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: transparent;
     color: white;
 }
 

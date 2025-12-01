@@ -536,3 +536,12 @@ a:focus,
     outline: 2px solid var(--neon-cyan);
     outline-offset: 2px;
 }
+
+/* ============================================
+   UTILITY OVERRIDES
+   ============================================ */
+
+.text-primary { color: var(--neon-cyan) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.bg-primary { background-color: var(--dark-bg-secondary) !important; }

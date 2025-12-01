@@ -10,40 +10,40 @@
     <div class="@NavMenuCssClass navbar-collapse">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#about" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(AboutSection)" href="#about" @onclick='() => OnNavItemClick(AboutSection)'>
                     <i class="fa-solid fa-address-card"></i> About
-                </NavLink>
+                </a>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#experience" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(ExperienceSection)" href="#experience" @onclick='() => OnNavItemClick(ExperienceSection)'>
                     <i class="fa-solid fa-briefcase"></i> Experience
-                </NavLink>
+                </a>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#projects" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(ProjectsSection)" href="#projects" @onclick='() => OnNavItemClick(ProjectsSection)'>
                     <i class="fa-solid fa-diagram-project"></i> Projects
-                </NavLink>
+                </a>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#education" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(EducationSection)" href="#education" @onclick='() => OnNavItemClick(EducationSection)'>
                     <i class="fa-solid fa-graduation-cap"></i> Education
-                </NavLink>
+                </a>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#skills" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(SkillsSection)" href="#skills" @onclick='() => OnNavItemClick(SkillsSection)'>
                     <i class="fa-solid fa-kitchen-set"></i> Skills
-                </NavLink>
+                </a>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="#interests" Match="NavLinkMatch.All">
+                <a class="@GetNavLinkClass(InterestsSection)" href="#interests" @onclick='() => OnNavItemClick(InterestsSection)'>
                     <i class="fa-solid fa-timeline"></i> Interests
-                </NavLink>
+                </a>
             </li>
             <li>
                 <hr style="color: white" />
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" @onclick="ToggleNavMenuMobile" href="fetchgithubdata" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick='() => OnNavItemClick(null)' href="fetchgithubdata" Match="NavLinkMatch.All">
                     <i class="fa-brands fa-github-alt"></i> Public Repositories
                 </NavLink>
             </li>
@@ -58,6 +58,7 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private string? activeSection = AboutSection;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -73,4 +74,24 @@
             collapseNavMenu = true;
         }
     }
+
+    private void OnNavItemClick(string? section)
+    {
+        activeSection = section;
+        ToggleNavMenuMobile();
+    }
+
+    private string GetNavLinkClass(string sectionFragment)
+    {
+        return string.Equals(activeSection, sectionFragment, StringComparison.OrdinalIgnoreCase)
+            ? "nav-link active"
+            : "nav-link";
+    }
+
+    private const string AboutSection = "#about";
+    private const string ExperienceSection = "#experience";
+    private const string ProjectsSection = "#projects";
+    private const string EducationSection = "#education";
+    private const string SkillsSection = "#skills";
+    private const string InterestsSection = "#interests";
 }

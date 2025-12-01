@@ -422,7 +422,8 @@ hr {
     color: var(--neon-cyan) !important;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
 }
 

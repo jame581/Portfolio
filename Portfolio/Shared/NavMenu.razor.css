@@ -40,13 +40,19 @@
         line-height: 3rem;
     }
 
+    .nav-item ::deep a:focus,
+    .nav-item ::deep a:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
+    background-color: transparent;
     color: white;
 }
 
 .nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: transparent;
     color: white;
 }
 

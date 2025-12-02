@@ -116,7 +116,7 @@ h3 {
 }
 
 p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     line-height: 1.8;
     font-size: 0.95rem;
 }

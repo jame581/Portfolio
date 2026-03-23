@@ -1,8 +1,8 @@
-﻿@inject IJSRuntime JSRuntime
+@inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 
 @code {
-    
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -13,6 +13,11 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initScrollReveal");
+        }
 
         await ScrollToFragment();
     }

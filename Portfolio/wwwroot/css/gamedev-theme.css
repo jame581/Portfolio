@@ -532,11 +532,17 @@ strong {
    FOCUS STATES
    ============================================ */
 
-button:focus,
-a:focus,
-.btn:focus {
+button:focus-visible,
+a:focus-visible,
+.btn:focus-visible {
     outline: 2px solid var(--neon-cyan);
     outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+.btn:focus:not(:focus-visible) {
+    outline: none;
 }
 
 /* ============================================

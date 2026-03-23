@@ -546,6 +546,76 @@ a:focus:not(:focus-visible),
 }
 
 /* ============================================
+   PROFILE IMAGE
+   ============================================ */
+
+.img-profile {
+    border: 3px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.img-profile:hover {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 25px rgba(179, 0, 255, 0.6), 0 0 50px rgba(179, 0, 255, 0.2);
+}
+
+/* ============================================
+   ITCH.IO EMBED WRAPPERS
+   ============================================ */
+
+.col-lg-6 > iframe,
+.flex-grow-1 > iframe {
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.col-lg-6 > iframe:hover,
+.flex-grow-1 > iframe:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* ============================================
+   SUBSECTION HEADINGS
+   ============================================ */
+
+.resume-section-content > h3 {
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--neon-purple);
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.resume-section {
+    animation: fade-in-up 0.6s ease-out both;
+}
+
+.project-card,
+.experience-item,
+.education-item,
+.skill-card {
+    animation: fade-in-up 0.5s ease-out both;
+}
+
+/* ============================================
    UTILITY OVERRIDES
    ============================================ */
 

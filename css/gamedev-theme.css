@@ -150,7 +150,7 @@ a:hover {
     top: 0;
     width: 3px;
     height: 100%;
-    background: linear-gradient(180deg, var(--neon-cyan) 0%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, var(--neon-cyan) 15%, transparent 100%);
 }
 
 .resume-section:nth-child(2n) {
@@ -532,11 +532,105 @@ strong {
    FOCUS STATES
    ============================================ */
 
-button:focus,
-a:focus,
-.btn:focus {
+button:focus-visible,
+a:focus-visible,
+.btn:focus-visible {
     outline: 2px solid var(--neon-cyan);
     outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+.btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ============================================
+   PROFILE IMAGE
+   ============================================ */
+
+.img-profile {
+    border: 3px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.img-profile:hover {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 25px rgba(179, 0, 255, 0.6), 0 0 50px rgba(179, 0, 255, 0.2);
+}
+
+/* ============================================
+   ITCH.IO EMBED WRAPPERS
+   ============================================ */
+
+.col-lg-6 > iframe,
+.flex-grow-1 > iframe {
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.col-lg-6 > iframe:hover,
+.flex-grow-1 > iframe:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* ============================================
+   SUBSECTION HEADINGS
+   ============================================ */
+
+.resume-section-content > h3 {
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--neon-purple);
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered children: cards cascade in one by one */
+.reveal.revealed .reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.reveal.revealed .reveal-child:nth-child(2) { transition-delay: 0.2s; }
+.reveal.revealed .reveal-child:nth-child(3) { transition-delay: 0.3s; }
+.reveal.revealed .reveal-child:nth-child(4) { transition-delay: 0.4s; }
+.reveal.revealed .reveal-child:nth-child(5) { transition-delay: 0.5s; }
+.reveal.revealed .reveal-child:nth-child(6) { transition-delay: 0.6s; }
+.reveal.revealed .reveal-child:nth-child(7) { transition-delay: 0.7s; }
+.reveal.revealed .reveal-child:nth-child(8) { transition-delay: 0.8s; }
+.reveal.revealed .reveal-child:nth-child(9) { transition-delay: 0.9s; }
+.reveal.revealed .reveal-child:nth-child(10) { transition-delay: 1.0s; }
+
+.reveal-child {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.reveal.revealed .reveal-child {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* First section (About) should be visible immediately */
+.resume-section:first-of-type.reveal {
+    opacity: 1;
+    transform: none;
 }
 
 /* ============================================

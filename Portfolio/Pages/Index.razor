@@ -1,29 +1,25 @@
-﻿@page "/"
+@page "/"
 @using Portfolio.Components
+@using Portfolio.Services
 
-<PageTitle>Jan Mesarc - Portfolio</PageTitle>
+<PageTitle>Jan Mesarc — Game Developer</PageTitle>
 
 <AnchorNavigation />
 
-<!-- About-->
 <AboutSection />
-<hr class="m-0" />
-
-<!-- Experience-->
 <ExperienceSection />
-<hr class="m-0" />
-
-<!-- Projects-->
 <ProjectSection />
-<hr class="m-0" />
-
-<!-- Education-->
 <EducationSection />
-<hr class="m-0" />
-
-<!-- Skills-->
 <SkillsSection />
-<hr class="m-0" />
-
-<!-- Interests-->
 <InterestsSection />
+
+<footer class="foot">
+    <div class="l">
+        <span>© 2026 Jan Mesarc</span>
+        <span>·</span>
+        <span>Built with Blazor WebAssembly</span>
+    </div>
+    <div class="l">
+        <span><span class="dot">●</span> v2.0 · build @BuildInfo.Stamp</span>
+    </div>
+</footer>

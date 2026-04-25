@@ -1,55 +1,54 @@
-<section class="resume-section reveal" id="about">
-    <div class="resume-section-content">
-        <h1 class="mb-0">
-            Jan
-            <span class="text-primary">Mesarc</span>
-        </h1>
-        <div class="subheading mb-5">
-            🎮 GAME DEV PROGRAMMER
-            <br />
-            Prague, Czech Republic | <a href="mailto:jan.mesarc@outlook.com">jan.mesarc@outlook.com</a>
+@inject IJSRuntime JS
+
+<section class="sec hero" id="about">
+    <div class="hero-meta">
+        <span><span class="dot">●</span> Prague, Czech Republic</span>
+        <span>·</span>
+        <span><a href="mailto:jan.mesarc@outlook.com">jan.mesarc@outlook.com</a></span>
+        <span>·</span>
+        <span class="available"><span class="pulse"></span>Open to collaborations · Q3 2026</span>
+    </div>
+
+    <h1 class="display reveal">
+        Jan Mesarc<br />
+        <span class="last">— builds games.</span>
+    </h1>
+
+    <p class="hero-tag reveal">
+        Game developer with 5+ years shipping titles in <b>Unreal Engine</b> and <b>Godot</b>.
+        Before games: web apps, mobile, and backend systems across <b>.NET</b>, <b>ASP.NET</b>, and <b>Azure</b>.
+        Currently at <b>Flying Rat Studio</b>, working on gameplay and networking systems.
+    </p>
+
+    <div class="cta-row reveal">
+        <a href="/#projects" class="btn btn-primary"
+           @onclick='() => ScrollTo("projects")' @onclick:preventDefault>
+            View shipped titles <span class="arrow">↓</span>
+        </a>
+        <a href="mailto:jan.mesarc@outlook.com" class="btn">
+            Get in touch <span class="arrow">→</span>
+        </a>
+    </div>
+
+    <div class="hero-stats reveal">
+        <div>
+            <div class="n">5<span class="unit">+ yrs</span></div>
+            <div class="l">Game development</div>
         </div>
-        <p class="lead mb-3">
-            <strong>[SYSTEM LOADED]</strong><br/>
-            Seasoned game developer with specialized expertise in <strong>Unreal Engine</strong> &amp; <strong>Godot</strong>. 
-            Proficient in <strong>C++</strong>, <strong>C#</strong>, and modern game development stacks. 
-            Currently deployed as full-time Game Programmer since 2021. Passionate about creating immersive, 
-            high-performance game experiences and architecting scalable game systems.
-        </p>
-        <p class="lead mb-3">
-            <strong>// CORE COMPETENCIES:</strong><br/>
-            🎯 <strong>Game Engines:</strong> Unreal Engine (C++), Godot (C#), Custom Engines<br/>
-            🎯 <strong>Languages:</strong> C++, C#, TypeScript, GDScript<br/>
-            🎯 <strong>Backend:</strong> ASP.NET Core, REST APIs, Database Architecture<br/>
-            🎯 <strong>Cross-Platform:</strong> .NET MAUI, Xamarin, Web Technologies
-        </p>
-        <p class="lead mb-5">
-            Since childhood, I've been captivated by the intersection of technology and interactive entertainment. 
-            My mission: craft engaging, technically sound games and tools that resonate with players. 
-            When not shipping features, I'm experimenting with new game tech and contributing to game dev communities. 
-            Check out my active development on <a href="https://github.com/jame581" target="_blank">GitHub</a> 
-            and playable titles on <a href="https://jame581.itch.io/" target="_blank">itch.io</a>.
-        </p>
-        <div class="social-icons row justify-content-md-left">
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="noopener" title="LinkedIn"
-               href="https://www.linkedin.com/in/jan-mesarc/">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/jame581">
-                <i class="fa-brands fa-twitter"></i>
-            </a>
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="noopener" title="GitHub" href="https://github.com/jame581">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="noopener" title="itch.io" href="https://jame581.itch.io/">
-                <i class="fa-brands fa-itch-io"></i>
-            </a>
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="noopener" title="Discord" href="https://discordapp.com/">
-                <i class="fa-brands fa-discord"></i>
-            </a>
-            <a class="social-icon mb-2 text-decoration-none" target="_blank" rel="me" title="Mastodon" href="https://mastodon.gamedev.place/@@jame_581">
-                <i class="fa-brands fa-mastodon"></i>
-            </a>
+        <div>
+            <div class="n">4<span class="unit">titles</span></div>
+            <div class="l">Shipped, professional</div>
+        </div>
+        <div>
+            <div class="n">10<span class="unit">+ yrs</span></div>
+            <div class="l">Software engineering</div>
         </div>
     </div>
 </section>
+
+@code {
+    private async Task ScrollTo(string id)
+    {
+        await JS.InvokeVoidAsync("BlazorScrollToId", id);
+    }
+}

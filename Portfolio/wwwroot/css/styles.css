@@ -1005,6 +1005,8 @@ footer .dot { color: var(--accent); }
     section.sec:first-of-type { padding-top: 16px; }
     .sec-marker { margin-bottom: 16px; font-size: 10px; }
     h2 { font-size: 22px; }
+    .skill-block { grid-template-columns: none; }
+    .edu { grid-template-columns: none; }
 }
 
 @media (max-width: 480px) {

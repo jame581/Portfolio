@@ -1,56 +1,69 @@
-<section class="resume-section reveal" id="skills">
-    <div class="resume-section-content">
-        <h2 class="mb-5">// SKILL INVENTORY</h2>
-        <p>
-            <strong>Development Profile:</strong> Specialized game programmer with 8+ years of software engineering experience. 
-            Expert in full-stack development with deep expertise in game engines, networking systems, and backend architecture. 
-            Primary focus: Unreal Engine (C++) and Godot (C#) for game development.
-        </p>
-        <div class="subheading mb-3">💻 Core Languages</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">
-            <span class="skill-badge">C# (Expert)</span>
-            <span class="skill-badge">C++ (Proficient)</span>
-            <span class="skill-badge">TypeScript (Proficient)</span>
-            <span class="skill-badge">HTML/CSS (Proficient)</span>
-            <span class="skill-badge">GDScript (Intermediate)</span>
-        </div>
-
-        <div class="subheading mb-3">🎮 Game Development Stacks</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">
-            <span class="skill-badge">Unreal Engine (Advanced)</span>
-            <span class="skill-badge">Godot (Advanced)</span>
-            <span class="skill-badge">Networking</span>
-            <span class="skill-badge">Gameplay Systems</span>
-            <span class="skill-badge">UI Implementation</span>
-        </div>
-
-        <div class="subheading mb-3">🔧 Backend &amp; Infrastructure</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">
-            <span class="skill-badge">.NET / .NET Core</span>
-            <span class="skill-badge">ASP.NET Core</span>
-            <span class="skill-badge">Blazor</span>
-            <span class="skill-badge">REST APIs</span>
-            <span class="skill-badge">SQL / Databases</span>
-            <span class="skill-badge">Azure</span>
-            <span class="skill-badge">Docker</span>
-        </div>
-
-        <div class="subheading mb-3">📱 Cross-Platform Development</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;">
-            <span class="skill-badge">.NET MAUI</span>
-            <span class="skill-badge">Xamarin Forms</span>
-            <span class="skill-badge">WPF</span>
-            <span class="skill-badge">Web Technologies</span>
-        </div>
-
-        <div class="subheading mb-3">🎯 Specialized Competencies</div>
-        <ul style="columns: 2;">
-            <li>Multiplayer networking &amp; replication systems</li>
-            <li>Gameplay mechanics architecture</li>
-            <li>UI system design &amp; implementation</li>
-            <li>Performance optimization &amp; profiling</li>
-            <li>API design &amp; integration</li>
-            <li>Cross-platform deployment</li>
-        </ul>
+<section class="sec" id="skills">
+    <div class="sec-marker">
+        <span class="num">05</span>
+        <span>Skills</span>
+        <span class="rule"></span>
     </div>
+
+    <p style="margin-top: 0; margin-bottom: 28px; max-width: 60ch; color: var(--fg-dim);">
+        Specialized game programmer with <b>10+ years of software engineering</b> experience.
+        Primary focus: <b>Unreal Engine (C++)</b> and <b>Godot (C#)</b>. Comfortable across
+        backend, cloud and cross-platform stacks when the job calls for it.
+    </p>
+
+    @foreach (var block in Blocks)
+    {
+        <div class="skill-block">
+            <div class="label"><span class="num">@block.Num</span>@block.Label</div>
+            <div class="skill-list">
+                @foreach (var s in block.Items)
+                {
+                    <span class="chip">
+                        @s.Name
+                        <span class="level"><i style="width: @($"{s.Level * 20}%");"></i></span>
+                    </span>
+                }
+            </div>
+        </div>
+    }
 </section>
+
+@code {
+    private record Skill(string Name, int Level);
+    private record SkillBlock(string Num, string Label, Skill[] Items);
+
+    private static readonly SkillBlock[] Blocks =
+    {
+        new("01", "Languages", new[]
+        {
+            new Skill("C#", 5),
+            new Skill("C++", 4),
+            new Skill("TypeScript", 4),
+            new Skill("GDScript", 3),
+            new Skill("HTML / CSS", 4),
+        }),
+        new("02", "Game Engines", new[]
+        {
+            new Skill("Unreal Engine", 5),
+            new Skill("Godot", 4),
+            new Skill("Replication & Networking", 4),
+            new Skill("Gameplay Systems", 5),
+            new Skill("UI Implementation", 4),
+        }),
+        new("03", "Backend & Cloud", new[]
+        {
+            new Skill(".NET / ASP.NET", 5),
+            new Skill("Blazor", 4),
+            new Skill("REST APIs", 4),
+            new Skill("SQL", 4),
+            new Skill("Azure", 3),
+            new Skill("Docker", 3),
+        }),
+        new("04", "Cross-Platform", new[]
+        {
+            new Skill(".NET MAUI", 4),
+            new Skill("Xamarin Forms", 4),
+            new Skill("WPF", 3),
+        }),
+    };
+}

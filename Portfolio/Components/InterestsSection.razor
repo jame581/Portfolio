@@ -1,22 +1,33 @@
-<section class="resume-section reveal" id="interests">
-    <div class="resume-section-content">
-        <h2 class="mb-5">Interests</h2>
-        <p>
-            I'm a curious and aspiring game developer who loves to learn new technologies and create immersive games. Some of the hobbies and activities I enjoy are:
-            <ul>
-                <li>Historical fencing (HEMA), a sport that recreates historical sword fighting techniques and styles.</li>
-                <li>Soccer and billiard, which I like to play with my friends for fun and relaxation.</li>
-                <li>Traveling, which I like to do whenever I have some free time and explore new places and cultures.</li>
-                <li>Snowboarding, which I like to do in the winter and enjoy the thrill and challenge of the slopes.</li>
-            </ul>
-        </p>
-        <p>
-            As a game developer, I have a strong curiosity and passion for learning new skills and technologies that can enhance my game development abilities.
-            I enjoy exploring different frameworks, platforms, and languages that can help me create games that are fun, immersive, and challenging.
-            Some of the technologies I have been working with are Unreal Engine, C++, and C#, Godot.
-            Unreal Engine is a powerful and versatile game engine that allows me to create games for various platforms, such as PC, console, and mobile.
-            C++ is a fast and efficient programming language that gives me low-level control and high-level abstraction.
-            By using these technologies, I can develop games that are engaging, interactive, and responsive.
-        </p>
+<section class="sec" id="interests">
+    <div class="sec-marker">
+        <span class="num">06</span>
+        <span>Interests</span>
+        <span class="rule"></span>
+    </div>
+
+    <p style="margin-top: 0; max-width: 60ch; color: var(--fg-dim);">
+        Outside of work — sport, travel and the slopes. New tech and new techniques are a constant.
+    </p>
+
+    <div class="interests-grid">
+        @foreach (var it in Entries)
+        {
+            <div class="interest">
+                <div class="k">@it.Kind</div>
+                <div class="v">@it.Value</div>
+            </div>
+        }
     </div>
 </section>
+
+@code {
+    private record Entry(string Kind, string Value);
+
+    private static readonly Entry[] Entries =
+    {
+        new("Sport",  "HEMA · Historical Fencing"),
+        new("Sport",  "Soccer & Billiard"),
+        new("Travel", "New places, new cultures"),
+        new("Winter", "Snowboarding"),
+    };
+}

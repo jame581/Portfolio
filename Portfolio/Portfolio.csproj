@@ -17,4 +17,22 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <Target Name="SetGitMetadata" BeforeTargets="GetAssemblyAttributes">
+    <Exec Command="git rev-parse --short HEAD"
+          ConsoleToMSBuild="true"
+          IgnoreExitCode="true"
+          StandardOutputImportance="low"
+          StandardErrorImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitShaResolved" />
+    </Exec>
+    <PropertyGroup>
+      <GitShaResolved Condition="'$(GitShaResolved)' == ''">dev</GitShaResolved>
+      <BuildDateResolved>$([System.DateTime]::UtcNow.ToString('yy.MM.dd'))</BuildDateResolved>
+    </PropertyGroup>
+    <ItemGroup>
+      <AssemblyMetadata Include="GitSha" Value="$(GitShaResolved)" />
+      <AssemblyMetadata Include="BuildDate" Value="$(BuildDateResolved)" />
+    </ItemGroup>
+  </Target>
+
 </Project>

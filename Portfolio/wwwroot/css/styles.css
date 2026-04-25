@@ -497,12 +497,11 @@ p strong, .lead strong { color: var(--fg); font-weight: 500; }
   gap: 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  padding-bottom: 12px;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* legacy Edge */
+  padding-bottom: 4px;
 }
-.strip::-webkit-scrollbar { height: 6px; }
-.strip::-webkit-scrollbar-track { background: var(--line); border-radius: 3px; }
-.strip::-webkit-scrollbar-thumb { background: var(--fg-muted); border-radius: 3px; }
+.strip::-webkit-scrollbar { display: none; } /* Chrome / Edge / Safari */
 
 .proj {
   scroll-snap-align: start;

@@ -6,7 +6,7 @@ public static class BuildInfo
 {
     public static string GitSha { get; } = ReadMetadata("GitSha", "dev");
     public static string BuildDate { get; } = ReadMetadata("BuildDate", "local");
-    public static string Stamp { get; } = $"build {BuildDate}-{GitSha}";
+    public static string Stamp { get; } = $"{BuildDate}-{GitSha}";
 
     private static string ReadMetadata(string key, string fallback)
     {

@@ -1,127 +1,124 @@
 @inject IJSRuntime JSRuntime
-@implements IDisposable
+@inject NavigationManager Nav
+@implements IAsyncDisposable
+@using Portfolio.Services
 
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="navbar-brand" href="#about">
-        <span class="d-block d-lg-none">Jan Mesarc</span>
-        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/profile1.jpg" alt="My profile image" /></span>
+<aside class="sidebar">
+    <a class="sb-brand" href="/#about" @onclick="GoHome" @onclick:preventDefault>
+        <img class="sb-avatar" src="assets/profile1.jpg" alt="Jan Mesarc" />
+        <div>
+            <div class="sb-name">Jan Mesarc</div>
+            <div class="sb-role">Game Developer</div>
+        </div>
     </a>
-    <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="@NavMenuCssClass navbar-collapse">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(AboutSection)" href="#about" @onclick='() => OnNavItemClick(AboutSection)'>
-                    <i class="fa-solid fa-address-card"></i> About
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(ExperienceSection)" href="#experience" @onclick='() => OnNavItemClick(ExperienceSection)'>
-                    <i class="fa-solid fa-briefcase"></i> Experience
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(ProjectsSection)" href="#projects" @onclick='() => OnNavItemClick(ProjectsSection)'>
-                    <i class="fa-solid fa-diagram-project"></i> Projects
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(EducationSection)" href="#education" @onclick='() => OnNavItemClick(EducationSection)'>
-                    <i class="fa-solid fa-graduation-cap"></i> Education
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(SkillsSection)" href="#skills" @onclick='() => OnNavItemClick(SkillsSection)'>
-                    <i class="fa-solid fa-kitchen-set"></i> Skills
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="@GetNavLinkClass(InterestsSection)" href="#interests" @onclick='() => OnNavItemClick(InterestsSection)'>
-                    <i class="fa-solid fa-timeline"></i> Interests
-                </a>
-            </li>
-            <li>
-                <hr style="color: white" />
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" @onclick='() => OnNavItemClick(null)' href="fetchgithubdata" Match="NavLinkMatch.All">
-                    <i class="fa-brands fa-github-alt"></i> Public Repositories
-                </NavLink>
-            </li>
-        </ul>
+
+    <div class="sb-section-label">// Sections</div>
+    <nav class="sb-nav">
+        @foreach (var item in Sections)
+        {
+            <a href="/#@item.Id"
+               class="@(IsHomeRoute && activeSection == item.Id ? "active" : null)"
+               @onclick="() => GoSection(item.Id)" @onclick:preventDefault>
+                <span class="idx">@item.Idx</span>
+                <span>@item.Label</span>
+                <span class="arrow">→</span>
+            </a>
+        }
+    </nav>
+
+    <div class="sb-section-label">// More</div>
+    <nav class="sb-nav">
+        <NavLink href="fetchgithubdata" Match="NavLinkMatch.All" ActiveClass="active">
+            <span class="idx">07</span>
+            <span>Public Repositories</span>
+            <span class="arrow">→</span>
+        </NavLink>
+    </nav>
+
+    <div class="sb-foot">
+        <div class="sb-socials">
+            <a href="https://www.linkedin.com/in/jan-mesarc/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://github.com/jame581" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://jame581.itch.io/" target="_blank" rel="noopener" title="itch.io"><i class="fa-brands fa-itch-io"></i></a>
+            <a href="https://twitter.com/jame581" target="_blank" rel="noopener" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://mastodon.gamedev.place/@@jame_581" target="_blank" rel="noopener" title="Mastodon"><i class="fa-brands fa-mastodon"></i></a>
+        </div>
+        <div class="sb-meta">
+            <span>build @BuildInfo.Stamp</span>
+            <span><span class="dot">●</span> v2.0</span>
+        </div>
     </div>
-    <div class="d-none d-lg-block p-2">
-        <a class="social-icon" target="_blank" rel="noopener" href="https://www.buymeacoffee.com/jame581">
-            <img class="img-fluid" src="assets/black-button.png" alt="Buy me a coffe" />
-        </a>
-    </div>
-</nav>
+</aside>
 
 @code {
-    private bool collapseNavMenu = true;
-    private string? activeSection = AboutSection;
+    private record SectionLink(string Id, string Label, string Idx);
+
+    private static readonly SectionLink[] Sections =
+    {
+        new("about",      "About",      "01"),
+        new("experience", "Experience", "02"),
+        new("projects",   "Projects",   "03"),
+        new("education",  "Education",  "04"),
+        new("skills",     "Skills",     "05"),
+        new("interests",  "Interests",  "06"),
+    };
+
+    private string activeSection = "about";
     private DotNetObjectReference<NavMenu>? _dotNetRef;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private bool IsHomeRoute =>
+        string.IsNullOrEmpty(Nav.ToBaseRelativePath(Nav.Uri).TrimEnd('/').Split('?', '#')[0]);
+
+    protected override void OnInitialized()
+    {
+        Nav.LocationChanged += OnLocationChanged;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             _dotNetRef = DotNetObjectReference.Create(this);
-            await JSRuntime.InvokeVoidAsync("initSectionObserver", _dotNetRef);
+            await StartObserver();
         }
+    }
+
+    private async Task StartObserver()
+    {
+        if (!IsHomeRoute || _dotNetRef is null) return;
+        var ids = Sections.Select(s => s.Id).ToArray();
+        await JSRuntime.InvokeVoidAsync("PortfolioObserveSections", _dotNetRef, ids);
+    }
+
+    private async void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        // Re-attach the section observer when navigating back to home; the
+        // section nodes only exist while Index.razor is rendered.
+        StateHasChanged();
+        if (IsHomeRoute) await StartObserver();
     }
 
     [JSInvokable]
-    public void OnSectionVisible(string sectionId)
+    public void SetActiveSection(string sectionId)
     {
-        var newSection = "#" + sectionId;
-        if (activeSection != newSection)
-        {
-            activeSection = newSection;
-            StateHasChanged();
-        }
+        if (activeSection == sectionId) return;
+        activeSection = sectionId;
+        StateHasChanged();
     }
 
-    private void ToggleNavMenu()
+    private void GoSection(string id)
     {
-        collapseNavMenu = !collapseNavMenu;
+        activeSection = id;
+        Nav.NavigateTo($"/#{id}");
     }
 
-    private void ToggleNavMenuMobile()
-    {
-        if (!collapseNavMenu)
-        {
-            collapseNavMenu = true;
-        }
-    }
+    private void GoHome() => GoSection("about");
 
-    private void OnNavItemClick(string? section)
+    public async ValueTask DisposeAsync()
     {
-        activeSection = section;
-        ToggleNavMenuMobile();
-    }
-
-    private string GetNavLinkClass(string sectionFragment)
-    {
-        return string.Equals(activeSection, sectionFragment, StringComparison.OrdinalIgnoreCase)
-            ? "nav-link active"
-            : "nav-link";
-    }
-
-    public void Dispose()
-    {
-        JSRuntime.InvokeVoidAsync("disposeSectionObserver");
+        Nav.LocationChanged -= OnLocationChanged;
+        try { await JSRuntime.InvokeVoidAsync("PortfolioDisposeObservers"); }
+        catch { /* JS runtime may already be gone during teardown */ }
         _dotNetRef?.Dispose();
     }
-
-    private const string AboutSection = "#about";
-    private const string ExperienceSection = "#experience";
-    private const string ProjectsSection = "#projects";
-    private const string EducationSection = "#education";
-    private const string SkillsSection = "#skills";
-    private const string InterestsSection = "#interests";
 }

@@ -1,81 +1,56 @@
-/*!
-* Start Bootstrap - Resume v7.0.6 (https://startbootstrap.com/theme/resume)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-resume/blob/master/LICENSE)
-*/
-//
-// Scripts
-//
-
+// Smooth-scroll into view by element id. Called from AnchorNavigation and NavMenu.
 function BlazorScrollToId(id) {
     const element = document.getElementById(id);
     if (element instanceof HTMLElement) {
-        element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-            inline: "nearest"
-        });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }
 }
 
-// ============================================
-// Scroll-triggered reveal animations
-// ============================================
-
+// Reveal-on-scroll: adds `.in` to `.reveal` elements as they enter the viewport.
+let _revealObserver = null;
 function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.reveal');
-    if (revealElements.length === 0) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
+    if (_revealObserver) _revealObserver.disconnect();
+    const els = document.querySelectorAll('.reveal');
+    if (els.length === 0) return;
+    _revealObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+            if (e.isIntersecting) {
+                e.target.classList.add('in');
+                _revealObserver.unobserve(e.target);
             }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    revealElements.forEach((el) => observer.observe(el));
+        }
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    els.forEach((el) => _revealObserver.observe(el));
 }
 
-// ============================================
-// Active nav section tracking on scroll
-// ============================================
-
+// Section scroll-spy for the sidebar. dotnetRef must expose `SetActiveSection(string)`.
 let _sectionObserver = null;
-let _dotNetRef = null;
-
-function initSectionObserver(dotNetRef) {
-    _dotNetRef = dotNetRef;
-
-    if (_sectionObserver) {
-        _sectionObserver.disconnect();
-    }
-
-    const sections = document.querySelectorAll('.resume-section[id]');
-    if (sections.length === 0) return;
-
+let _sectionRef = null;
+function PortfolioObserveSections(dotnetRef, ids) {
+    if (_sectionObserver) _sectionObserver.disconnect();
+    _sectionRef = dotnetRef;
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (els.length === 0) return;
     _sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting && _dotNetRef) {
-                _dotNetRef.invokeMethodAsync('OnSectionVisible', entry.target.id);
+        for (const e of entries) {
+            if (e.isIntersecting && _sectionRef) {
+                _sectionRef.invokeMethodAsync('SetActiveSection', e.target.id);
             }
-        });
-    }, {
-        threshold: 0.3,
-        rootMargin: '-10% 0px -60% 0px'
-    });
-
-    sections.forEach((section) => _sectionObserver.observe(section));
+        }
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    els.forEach((el) => _sectionObserver.observe(el));
 }
 
-function disposeSectionObserver() {
-    if (_sectionObserver) {
-        _sectionObserver.disconnect();
-        _sectionObserver = null;
-    }
-    _dotNetRef = null;
+function PortfolioDisposeObservers() {
+    if (_sectionObserver) { _sectionObserver.disconnect(); _sectionObserver = null; }
+    if (_revealObserver) { _revealObserver.disconnect(); _revealObserver = null; }
+    _sectionRef = null;
+}
+
+// Filmstrip arrow click — scroll one card width.
+function PortfolioScrollStrip(el, dir) {
+    if (!el) return;
+    const card = el.querySelector('.proj');
+    const w = card ? card.offsetWidth + 18 : 380;
+    el.scrollBy({ left: dir * w, behavior: 'smooth' });
 }

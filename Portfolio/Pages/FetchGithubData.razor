@@ -1,73 +1,134 @@
-﻿@page "/fetchgithubdata"
+@page "/fetchgithubdata"
 @inject HttpClient Http
+@inject NavigationManager Nav
 
-<PageTitle>Public GitHub Repositories</PageTitle>
+<PageTitle>Public Repositories — Jan Mesarc</PageTitle>
 
-<section class="resume-section">
-    <div class="resume-section-content">
-        <h2 class="mb-5">Public GitHub Repositories</h2>
-        <p>This page fetches public repositories data from my GitHub account: <strong>jame581</strong></p>
+<div class="page">
+    <div class="sec-marker" style="margin-top: 32px;">
+        <span class="num">07</span>
+        <span>Public Repositories</span>
+        <span class="rule"></span>
+        <a href="/#about" style="color: var(--fg-dim);"
+           @onclick="GoHome" @onclick:preventDefault>← Back</a>
+    </div>
 
-        @if (repositories == null)
+    <div class="repos-head">
+        <div>
+            <h2 style="margin-bottom: 6px;">github.com/jame581</h2>
+            <div class="meta">Public repos · sorted by recent activity</div>
+        </div>
+        <label class="repo-search">
+            <span>⌕</span>
+            <input @bind="query" @bind:event="oninput" placeholder="filter repositories…" />
+        </label>
+    </div>
+
+    <div class="repo-list">
+        @if (repositories is null)
         {
-            <p><em>Loading GitHub repositories...</em></p>
+            <div class="repo-empty">Loading repositories…</div>
         }
         else
         {
-            <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Created</th>
-                            <th>Last Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var repo in repositories)
-                        {
-                            <tr>
-                                <td>
-                                    <a target="_blank" rel="noopener" href=@repo.HTML_URL>
-                                        @repo.Full_Name
-                                    </a>
-                                </td>
-                                <td>@repo.Description</td>
-                                <td>@repo.Created_At.ToShortDateString()</td>
-                                <td>@repo.Updated_At.ToShortDateString()</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+            var filtered = Filter(repositories, query);
+            @if (filtered.Count == 0)
+            {
+                <div class="repo-empty">no repositories match &ldquo;@query&rdquo;</div>
+            }
+            else
+            {
+                @foreach (var r in filtered)
+                {
+                    <a class="repo" href="@r.Html_Url" target="_blank" rel="noopener">
+                        <div>
+                            <div class="name">
+                                @r.Name
+                                <span class="vis">public</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(r.Description))
+                            {
+                                <p>@r.Description</p>
+                            }
+                            <div class="stats">
+                                @if (!string.IsNullOrEmpty(r.Language))
+                                {
+                                    <span><span class="lang">●</span> @r.Language</span>
+                                }
+                                <span>★ @r.Stargazers_Count</span>
+                                <span>updated @Relative(r.Pushed_At ?? r.Updated_At)</span>
+                            </div>
+                        </div>
+                        <div class="right">↗</div>
+                    </a>
+                }
+            }
         }
     </div>
-</section>
+</div>
 
+<style>
+    .repo-empty {
+        padding: 24px;
+        text-align: center;
+        color: var(--fg-muted);
+        font-family: var(--font-mono);
+        font-size: 12px;
+    }
+</style>
 
 @code {
-    List<HistoryItem>? repositories;
+    private List<Repo>? repositories;
+    private string query = "";
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-        repositories = await Http.GetFromJsonAsync<List<HistoryItem>>("https://api.github.com/users/jame581/repos");
-
-        if (repositories != null)
+        try
         {
-            repositories = repositories.OrderByDescending(x => x.Updated_At).ToList();
+            var data = await Http.GetFromJsonAsync<List<Repo>>(
+                "https://api.github.com/users/jame581/repos?per_page=100");
+            repositories = (data ?? new())
+                .OrderByDescending(r => r.Pushed_At ?? r.Updated_At)
+                .ToList();
+        }
+        catch
+        {
+            repositories = new List<Repo>();
         }
     }
 
-    class HistoryItem
+    private void GoHome() => Nav.NavigateTo("/#about");
+
+    private static List<Repo> Filter(List<Repo> all, string q)
     {
-        public string Full_Name { get; set; }
-        public string Description { get; set; }
-        public string HTML_URL { get; set; }
-        public DateTime Created_At { get; set; }
+        if (string.IsNullOrWhiteSpace(q)) return all;
+        var needle = q.Trim();
+        return all.Where(r =>
+            (r.Name?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (r.Description?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (r.Language?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false))
+            .ToList();
+    }
+
+    private static string Relative(DateTime utc)
+    {
+        var span = DateTime.UtcNow - utc;
+        if (span.TotalDays < 1)   return "today";
+        if (span.TotalDays < 7)   return $"{(int)span.TotalDays}d";
+        if (span.TotalDays < 30)  return $"{(int)(span.TotalDays / 7)}w";
+        if (span.TotalDays < 365) return $"{(int)(span.TotalDays / 30)}mo";
+        return $"{(int)(span.TotalDays / 365)}y";
+    }
+
+    private class Repo
+    {
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? Html_Url { get; set; }
+        public string? Language { get; set; }
+        public int Stargazers_Count { get; set; }
+        public DateTime? Pushed_At { get; set; }
         public DateTime Updated_At { get; set; }
-        public string Language { get; set; }
         public bool Fork { get; set; }
     }
 }

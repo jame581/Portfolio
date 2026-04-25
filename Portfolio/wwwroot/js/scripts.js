@@ -54,3 +54,22 @@ function PortfolioScrollStrip(el, dir) {
     const w = card ? card.offsetWidth + 18 : 380;
     el.scrollBy({ left: dir * w, behavior: 'smooth' });
 }
+
+// Mobile drawer auto-close — closes when viewport widens past 900px or Esc is pressed.
+window.PortfolioDrawer = {
+    bind(dotNetRef) {
+        const onResize = () => {
+            if (window.innerWidth > 900) dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+        };
+        const onKey = (e) => {
+            if (e.key === 'Escape') dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+        };
+        window.addEventListener('resize', onResize);
+        window.addEventListener('keydown', onKey);
+        window.PortfolioDrawer._cleanup = () => {
+            window.removeEventListener('resize', onResize);
+            window.removeEventListener('keydown', onKey);
+        };
+    },
+    unbind() { window.PortfolioDrawer._cleanup?.(); }
+};

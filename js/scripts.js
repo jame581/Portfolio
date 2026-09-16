@@ -2,7 +2,8 @@
 function BlazorScrollToId(id) {
     const element = document.getElementById(id);
     if (element instanceof HTMLElement) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        element.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start', inline: 'nearest' });
     }
 }
 
@@ -19,7 +20,7 @@ function initScrollReveal() {
                 _revealObserver.unobserve(e.target);
             }
         }
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { rootMargin: '0px 0px -8% 0px' });
     els.forEach((el) => _revealObserver.observe(el));
 }
 
@@ -51,7 +52,7 @@ function PortfolioDisposeObservers() {
 function PortfolioScrollStrip(el, dir) {
     if (!el) return;
     const card = el.querySelector('.proj');
-    const w = card ? card.offsetWidth + 18 : 380;
+    const w = card ? card.offsetWidth + 14 : 344; // card + .strip gap
     el.scrollBy({ left: dir * w, behavior: 'smooth' });
 }
 

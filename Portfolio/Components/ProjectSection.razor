@@ -2,18 +2,17 @@
 
 <section class="sec" id="projects">
     <div class="sec-marker">
-        <span class="num">03</span>
-        <span>Shipped Titles &amp; Projects</span>
+        <span class="num">02</span>
+        <span>Shipped titles and projects</span>
         <span class="rule"></span>
+        <span class="count">@(ShippedTitles.Length + ItchEntries.Length) entries</span>
     </div>
 
-    <h2 style="margin-bottom: 6px;">Professional</h2>
-    <p style="margin: 0 0 18px; color: var(--fg-dim); font-size: 14px;">
-        Commercial titles I&rsquo;ve contributed to as a gameplay or systems programmer.
-    </p>
+    <h2>Professional</h2>
+    <p class="lede" style="margin-top:6px">Commercial titles I have contributed to as a gameplay or systems programmer.</p>
 
     <div class="strip-controls">
-        <span class="count">@ShippedTitles.Length titles · scroll →</span>
+        <span class="count">@ShippedTitles.Length titles, scroll sideways</span>
         <div class="nav">
             <button type="button" aria-label="Previous" @onclick="() => Scroll(-1)">‹</button>
             <button type="button" aria-label="Next" @onclick="() => Scroll(1)">›</button>
@@ -32,8 +31,7 @@
                     <div class="body">
                         <div class="pmeta">
                             <span class="yr">@p.Year</span>
-                            <span>·</span>
-                            <span>@p.Role</span>
+                            <span>@p.Platforms</span>
                         </div>
                         <h4>@p.Title</h4>
                         <p class="desc">@p.Desc</p>
@@ -49,10 +47,8 @@
         </div>
     </div>
 
-    <h2 style="margin: 56px 0 6px;">Itch.io · Jams &amp; Experiments</h2>
-    <p style="margin: 0 0 4px; color: var(--fg-dim); font-size: 14px;">
-        Smaller games and prototypes — most made in jams with friends.
-    </p>
+    <h2 style="margin-top:clamp(44px,5vw,64px)">Jams and experiments</h2>
+    <p class="lede" style="margin-top:6px">Smaller games and prototypes, most of them made in jams with friends.</p>
 
     <div class="itch-grid">
         @foreach (var g in ItchEntries)
@@ -64,7 +60,7 @@
                 </div>
                 <p>@g.Desc</p>
                 <div class="row">
-                    <span>jame581.itch.io</span>
+                    <span>@g.Host</span>
                     <span class="play">play ↗</span>
                 </div>
             </a>
@@ -78,55 +74,59 @@
     private async Task Scroll(int dir) =>
         await JS.InvokeVoidAsync("PortfolioScrollStrip", stripEl, dir);
 
-    private record Shipped(string Title, string Year, string Badge, string Img,
-                           string Desc, string Role, ProjectLink[] Links);
+    private record Shipped(string Title, string Year, string Platforms, string Badge, string Img,
+                           string Desc, ProjectLink[] Links);
     private record ProjectLink(string Label, string Href);
-    private record ItchEntry(string Title, string Year, string Desc, string Href);
+
+    private record ItchEntry(string Title, string Year, string Desc, string Href)
+    {
+        // Jan's own pages show the full subdomain; collaborators' pages just say itch.io.
+        public string Host => new Uri(Href).Host == "jame581.itch.io" ? "jame581.itch.io" : "itch.io";
+    }
 
     private static readonly Shipped[] ShippedTitles =
     {
-        new("Darkest Dungeon: The Fire's Edge", "2026", "DLC · Gameplay Programmer",
-            "images/fires-edge-placeholder.jpg",
-            "A major DLC for the gothic roguelike Darkest Dungeon. Implemented the full DLC on the code side for PC.",
-            "Gameplay programmer · PC",
+        new("Darkest Dungeon: The Fire's Edge", "2026", "PC",
+            "Gameplay programmer, co-dev", "images/fires-edge.jpg",
+            "A major DLC for the gothic roguelike. I implemented the DLC on the code side, from new mechanics to content systems.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/4964110/Darkest_Dungeon_The_Fires_Edge/"),
             }),
-        new("MOTHERGUNSHIP: FORGE", "2023", "UE4 → UE5 Migration", "images/mothergunship-forge.jpg",
-            "VR FPS roguelite where you forge absurdly powerful guns and blast through the belly of a metal alien monstrosity — the follow-up to MOTHERGUNSHIP.",
-            "Engine migration · Unreal · C++",
+        new("MOTHERGUNSHIP: FORGE", "2023", "PC VR, Quest",
+            "Engine migration, UE4 to UE5", "images/mothergunship-forge.jpg",
+            "A VR shooter about forging absurd guns and firing them into a metal alien. I ported it from UE4 to UE5 and fixed the fallout in C++.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/1931240/MOTHERGUNSHIP_FORGE/"),
             }),
-        new("Beat Saber", "2018", "Live Ops · Updates", "images/beat-saber.jpg",
-            "Award-winning VR rhythm game where players slash beats to music. Contributing on live updates and platform work.",
-            "Gameplay · Unreal · C++",
+        new("Beat Saber", "Joined 2022", "Quest, PC VR, PS VR",
+            "Post-launch updates, co-dev", "images/beat-saber.jpg",
+            "The VR rhythm game where you slash beats to music. I joined long after launch, on content updates and platform support.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/620980/Beat_Saber/"),
                 new ProjectLink("Site",  "https://beatsaber.com/"),
             }),
-        new("Phantom Fury", "2024", "Gameplay Systems", "images/phantom-fury.jpg",
-            "Retro-inspired first-person shooter with fast-paced action, creative weapons and a cross-country road trip.",
-            "Gameplay · Unreal · C++",
+        new("Phantom Fury", "2024", "PC, console",
+            "Gameplay systems, co-dev", "images/phantom-fury.jpg",
+            "A retro-styled shooter with improvised weapons and a road trip across the country. I built gameplay systems and weapon behaviour.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/1733240/Phantom_Fury/"),
                 new ProjectLink("Site",  "https://www.slipgate-ironworks.com/phantom-fury/"),
             }),
-        new("The Last Oricru", "2022", "Gameplay Systems", "images/the-last-oricru.jpg",
-            "Story-driven action-RPG set in a sci-fi medieval world, focused on impactful player choices and co-op gameplay.",
-            "Gameplay & networking · Unreal · C++",
+        new("The Last Oricru", "2022", "PC, PS5, Xbox Series",
+            "Gameplay and co-op networking", "images/the-last-oricru.jpg",
+            "A story-driven action RPG built around player choice and co-op. I worked on gameplay and the replication behind shared play.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/1663640/The_Last_Oricru/"),
                 new ProjectLink("Site",  "https://lastoricru.com/"),
             }),
-        new("Darkest Dungeon", "2016", "Contributor", "images/darkest-dungeon.jpg",
-            "Challenging gothic roguelike turn-based RPG about the psychological stresses of adventuring.",
-            "Engineering support",
+        new("Darkest Dungeon", "Joined 2022", "PC, console",
+            "Studio title, support work", "images/darkest-dungeon.jpg",
+            "The turn-based gothic roguelike about what adventuring does to the people who do it. My work here is post-launch, alongside the DLC.",
             new[]
             {
                 new ProjectLink("Steam", "https://store.steampowered.com/app/262060/Darkest_Dungeon/"),
@@ -136,16 +136,16 @@
 
     private static readonly ItchEntry[] ItchEntries =
     {
-        new("Tree Lover Journey",   "2026", "Parrot-friendly strategy game. Godot Wild Jam #90.", "https://jame581.itch.io/tree-lover-journey"),
-        new("Some Must Fall",       "2026", "2D side-view boss fight jam entry.",           "https://hubacekjakub.itch.io/someone-must-fall"),
-        new("Quest: Stop Ritual",   "2026", "Epic hero, awful timing. A comedic cutscene for GoedWare Game Jam 2.",              "https://hubacekjakub.itch.io/quest-stop-the-ritual"),
-        new("Fast and Focused",     "2025", "RatJam2025 entry: Autistic Animals.",          "https://jame581.itch.io/fast-focused"),
-        new("Brain and Gut",        "2025", "Navigate the wreckage and solve puzzles!",   "https://jame581.itch.io/brain-and-gut"),
-        new("Pocketwatch",          "2024", "Pocketwatch is a 60-second cutscene about a time loop.",                    "https://jame581.itch.io/pocketwatch"),
-        new("Stellar Secrets",      "2024", "Cosmic mystery built with a five-person team.",    "https://jame581.itch.io/stellar-secrets"),
-        new("Night In The Mouseum", "2023", "Tiny adventure, after-hours museum.",              "https://jame581.itch.io/night-in-the-mouseum"),
-        new("Shoot Numbers",        "2022", "Arcade arithmetic, fast and noisy.",               "https://jame581.itch.io/shoot-numbers"),
-        new("Rocket of Milky Way",  "2022", "Cozy launch-and-land arcade loop.",                "https://jame581.itch.io/romw"),
-        new("Submarinened",         "2022", "Submarine survival jam entry.",                    "https://jame581.itch.io/submarinened"),
+        new("Tree Lover Journey",     "2026", "A strategy game about keeping parrots fed and their trees standing. Made for Godot Wild Jam 90.", "https://jame581.itch.io/tree-lover-journey"),
+        new("Some Must Fall",         "2026", "A 2D side-view boss fight, put together over a jam weekend.",                                   "https://hubacekjakub.itch.io/someone-must-fall"),
+        new("Quest: Stop the Ritual", "2026", "A comedic cutscene about a hero who arrives exactly too late. GoedWare Game Jam 2.",             "https://hubacekjakub.itch.io/quest-stop-the-ritual"),
+        new("Fast and Focused",       "2025", "My entry for RatJam 2025, on the theme of autistic animals.",                                   "https://jame581.itch.io/fast-focused"),
+        new("Brain and Gut",          "2025", "Two halves of one body solving puzzles through the wreckage.",                                  "https://jame581.itch.io/brain-and-gut"),
+        new("Pocketwatch",            "2024", "A 60 second cutscene about a time loop.",                                                       "https://jame581.itch.io/pocketwatch"),
+        new("Stellar Secrets",        "2024", "A cosmic mystery I built with a team of five.",                                                 "https://jame581.itch.io/stellar-secrets"),
+        new("Night In The Mouseum",   "2023", "A small adventure set in a museum after closing time.",                                         "https://jame581.itch.io/night-in-the-mouseum"),
+        new("Shoot Numbers",          "2022", "An arcade shooter where the targets are arithmetic.",                                           "https://jame581.itch.io/shoot-numbers"),
+        new("Rocket of Milky Way",    "2022", "Launch a rocket, land it in one piece, do it again.",                                           "https://jame581.itch.io/romw"),
+        new("Submarinened",           "2022", "Keep a leaking submarine running for as long as you can.",                                      "https://jame581.itch.io/submarinened"),
     };
 }

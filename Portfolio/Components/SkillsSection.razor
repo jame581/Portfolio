@@ -5,30 +5,41 @@
         <span class="rule"></span>
     </div>
 
-    <p style="margin-top: 0; margin-bottom: 28px; max-width: 60ch; color: var(--fg-dim);">
-        Specialized game programmer with <b>10+ years of software engineering</b> experience.
-        Primary focus: <b>Unreal Engine (C++)</b> and <b>Godot (C#)</b>. Comfortable across
-        backend, cloud and cross-platform stacks when the job calls for it.
+    <p class="lede" style="margin-bottom:26px">
+        I am a specialised game programmer with <b>ten years of software engineering</b> behind me.
+        My primary tools are <b>Unreal Engine with C++</b> and <b>Godot with C#</b>, and I am comfortable
+        across backend, cloud and cross-platform stacks when a job calls for it.
     </p>
 
-    @foreach (var block in Blocks)
-    {
-        <div class="skill-block">
-            <div class="label"><span class="num">@block.Num</span>@block.Label</div>
-            <div class="skill-list">
-                @foreach (var s in block.Items)
-                {
-                    <span class="chip">
-                        @s.Name
-                        <span class="level"><i style="width: @($"{s.Level * 20}%");"></i></span>
-                    </span>
-                }
+    <div class="skill-blocks">
+        @foreach (var block in Blocks)
+        {
+            <div class="skill-block">
+                <div class="label"><span class="num">@block.Num</span>@block.Label</div>
+                <div class="skill-list">
+                    @foreach (var s in block.Items)
+                    {
+                        <span class="chip">
+                            @s.Name
+                            <span class="ticks">
+                                @for (var i = 1; i <= MaxLevel; i++)
+                                {
+                                    <i class="@(i <= s.Level ? "on" : null)"></i>
+                                }
+                            </span>
+                        </span>
+                    }
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+
+    <p class="skill-note">Five ticks means I have shipped production work with it. Three means I am productive with docs open.</p>
 </section>
 
 @code {
+    private const int MaxLevel = 5;
+
     private record Skill(string Name, int Level);
     private record SkillBlock(string Num, string Label, Skill[] Items);
 
@@ -40,26 +51,26 @@
             new Skill("C++", 4),
             new Skill("TypeScript", 4),
             new Skill("GDScript", 3),
-            new Skill("HTML / CSS", 4),
+            new Skill("HTML and CSS", 4),
         }),
-        new("02", "Game Engines", new[]
+        new("02", "Game engines", new[]
         {
             new Skill("Unreal Engine", 5),
             new Skill("Godot", 4),
-            new Skill("Replication & Networking", 4),
-            new Skill("Gameplay Systems", 5),
-            new Skill("UI Implementation", 4),
+            new Skill("Replication and networking", 4),
+            new Skill("Gameplay systems", 5),
+            new Skill("UI implementation", 4),
         }),
-        new("03", "Backend & Cloud", new[]
+        new("03", "Backend and cloud", new[]
         {
-            new Skill(".NET / ASP.NET", 5),
+            new Skill(".NET and ASP.NET", 5),
             new Skill("Blazor", 4),
             new Skill("REST APIs", 4),
             new Skill("SQL", 4),
             new Skill("Azure", 3),
             new Skill("Docker", 3),
         }),
-        new("04", "Cross-Platform", new[]
+        new("04", "Cross-platform", new[]
         {
             new Skill(".NET MAUI", 4),
             new Skill("Xamarin Forms", 4),

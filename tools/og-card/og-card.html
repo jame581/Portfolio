@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+  Social preview card (og:image), 1200x630.
+  Render with tools/og-card/render.ps1; output goes to Portfolio/wwwroot/assets/og-card.jpg.
+  Tokens and type mirror Portfolio/wwwroot/css/site.css, scaled up so the text
+  survives being shown at roughly 500px wide in link previews.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Geist:wght@400;500&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+--bg:#0b0b0c;--line:rgba(236,234,228,.09);--line2:rgba(236,234,228,.17);
+--fg:#ecebe6;--dim:#9b9a93;--sig:oklch(.66 .2 27);
+--sans:"Geist",ui-sans-serif,system-ui,"Segoe UI",sans-serif;
+--mono:"JetBrains Mono",ui-monospace,monospace;
+--disp:"Archivo","Helvetica Neue",Helvetica,sans-serif}
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--bg)}
+body{color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.card{position:relative;width:1200px;height:630px;padding:60px 72px 52px;display:flex;flex-direction:column;background:radial-gradient(120% 90% at 12% -20%,#16171c 0%,var(--bg) 60%)}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.62' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px}
+.top{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:64px;align-items:start}
+.meta{display:flex;gap:48px;font-family:var(--mono);font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+h1{margin:40px 0 0;font-family:var(--disp);font-weight:700;font-variation-settings:"wdth" 90,"wght" 700;font-size:74px;line-height:1;letter-spacing:-.022em;text-wrap:balance}
+.mark{box-shadow:inset 0 -.1em 0 0 var(--sig)}
+.shipped{display:flex;align-items:baseline;gap:18px;margin-top:40px}
+.shipped .n{font-family:var(--disp);font-variation-settings:"wdth" 88,"wght" 600;font-size:52px;line-height:1}
+.shipped .l{font-family:var(--mono);font-size:19px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.portrait{margin:0;border:1px solid var(--line2);padding:7px}
+.portrait img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.95)}
+.foot{display:flex;align-items:baseline;justify-content:space-between;padding-top:22px;border-top:1px solid var(--line2)}
+.name{font-size:30px;font-weight:500;letter-spacing:-.015em}
+.url{font-family:var(--mono);font-size:19px;letter-spacing:.08em;color:var(--dim)}
+.url .dot{color:var(--sig);margin-right:10px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="meta"><span>Prague, Czech Republic</span><span>Unreal Engine and C++</span></div>
+      <h1>I build gameplay and <span class="mark">networking</span> systems for games that ship.</h1>
+      <div class="shipped"><span class="n">6</span><span class="l">Shipped titles on PC, console and VR</span></div>
+    </div>
+    <figure class="portrait"><img src="../../Portfolio/wwwroot/assets/profile1.jpg" alt="" /></figure>
+  </div>
+  <div class="foot">
+    <span class="name">Jan Mesarc</span>
+    <span class="url"><span class="dot">●</span>janmesarc.online</span>
+  </div>
+</div>
+</body>
+</html>

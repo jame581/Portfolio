@@ -6,14 +6,14 @@
 <aside class="sidebar">
     <div class="sb-brand-row">
         <a class="sb-brand" href="/#about" @onclick="GoHome" @onclick:preventDefault>
-            <img class="sb-avatar" src="assets/profile1.jpg" alt="Jan Mesarc" />
+            <img src="assets/profile1.jpg" alt="Jan Mesarc" />
             <div>
                 <div class="sb-name">Jan Mesarc</div>
-                <div class="sb-role">Game Developer</div>
+                <div class="sb-role">Gameplay programmer</div>
             </div>
         </a>
         <button type="button"
-                class="sb-mobile-toggle"
+                class="sb-toggle"
                 aria-label="@(_drawerOpen ? "Close menu" : "Open menu")"
                 aria-expanded="@_drawerOpen.ToString().ToLower()"
                 @onclick="ToggleDrawer">
@@ -21,8 +21,8 @@
         </button>
     </div>
 
-    <div class="sb-mobile-drawer @(_drawerOpen ? "open" : "")">
-        <div class="sb-section-label">// Sections</div>
+    <div class="sb-drawer @(_drawerOpen ? "open" : "")">
+        <div class="sb-label">Sections</div>
         <nav class="sb-nav">
             @foreach (var item in Sections)
             {
@@ -36,31 +36,37 @@
             }
         </nav>
 
-        <div class="sb-section-label">// More</div>
+        <div class="sb-label">More</div>
         <nav class="sb-nav">
             <NavLink href="fetchgithubdata" Match="NavLinkMatch.All" ActiveClass="active"
                      @onclick="CloseDrawer">
                 <span class="idx">07</span>
-                <span>Public Repositories</span>
+                <span>Public repositories</span>
                 <span class="arrow">→</span>
             </NavLink>
         </nav>
 
         <div class="sb-foot">
             <div class="sb-socials">
-                <a href="https://www.linkedin.com/in/jan-mesarc/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://github.com/jame581" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://jame581.itch.io/" target="_blank" rel="noopener" title="itch.io"><i class="fa-brands fa-itch-io"></i></a>
-                <a href="https://twitter.com/jame581" target="_blank" rel="noopener" title="Twitter" aria-label="Twitter / X">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
+                <a href="https://www.linkedin.com/in/jan-mesarc/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.27 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 7v7.44h-4.55v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.49V22H7.49V8z" /></svg>
                 </a>
-                <a href="https://mastodon.gamedev.place/@@jame_581" target="_blank" rel="noopener" title="Mastodon"><i class="fa-brands fa-mastodon"></i></a>
+                <a href="https://github.com/jame581" target="_blank" rel="noopener" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2.9-.3 1.9-.4 3-.4 1 0 2 .1 3 .4 2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z" /></svg>
+                </a>
+                <a href="https://jame581.itch.io/" target="_blank" rel="noopener" aria-label="itch.io">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.13 1.34C2.05 2 .07 4.18 0 4.91v1.21c0 1.5 1.41 2.83 2.69 2.83 1.55 0 2.84-1.28 2.84-2.79 0 1.51 1.24 2.79 2.79 2.79s2.79-1.28 2.79-2.79c0 1.51 1.32 2.79 2.87 2.79h.03c1.55 0 2.87-1.28 2.87-2.79 0 1.51 1.29 2.79 2.84 2.79 1.28 0 2.69-1.33 2.69-2.83V4.91c-.07-.73-2.05-2.91-3.13-3.57C18.66 1.05 14.63.99 12 .99c-2.63 0-7.6.06-8.87.35zM10.61 9.66c-.69 1.04-1.95 1.31-2.75 1.31-.79 0-2.06-.27-2.74-1.31-.18.18-1.34 1.15-2.7 1.15-.18 0-.35-.02-.53-.05C1.5 12.86 1.59 18.78 1.74 19.7c.21 1.27.63 2.4 2.07 2.78 1.62.43 6.84.46 8.18.46s6.55-.03 8.18-.46c1.44-.38 1.86-1.51 2.07-2.78.16-.92.24-6.84.16-8.94-.18.03-.36.05-.54.05-1.36 0-2.51-.97-2.69-1.15-.69 1.04-1.95 1.31-2.75 1.31-.79 0-2.05-.27-2.74-1.31-.69 1.04-1.96 1.31-2.75 1.31-.81 0-2.07-.27-2.76-1.31zm-2.4 4.06h7.58c1.21 0 2.21 1.03 2.21 2.21v3.16c0 .61-.5 1.11-1.11 1.11h-2.21c-.61 0-1.11-.5-1.11-1.11h-3.39c0 .61-.5 1.11-1.11 1.11H7.31c-.61 0-1.11-.5-1.11-1.11v-3.16c0-1.18 1-2.21 2.01-2.21z" /></svg>
+                </a>
+                <a href="https://twitter.com/jame581" target="_blank" rel="noopener" aria-label="X">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                </a>
+                <a href="https://mastodon.gamedev.place/@@jame_581" target="_blank" rel="noopener" aria-label="Mastodon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.58 13.913c-.29 1.469-2.592 3.121-5.238 3.396-1.379.156-2.737.297-4.185.231-2.367-.108-4.236-.564-4.236-.564 0 .23.014.45.043.658.308 2.327 2.31 2.466 4.207 2.531 1.916.066 3.622-.473 3.622-.473l.079 1.732s-1.34.72-3.728.852c-1.317.073-2.952-.033-4.857-.535C2.16 20.652.6 16.247.371 11.78c-.07-1.327-.06-2.578-.06-3.625 0-4.572 2.995-5.913 2.995-5.913C4.815 1.546 7.405 1.219 10.1 1.198h.066c2.694.022 5.286.348 6.795 1.044 0 0 2.995 1.341 2.995 5.913 0 0 .037 3.373-.42 5.758zm-3.073-5.478V14.1h-2.32V8.605c0-1.158-.488-1.747-1.464-1.747-1.078 0-1.618.697-1.618 2.078v3.01h-2.305V8.937c0-1.382-.54-2.078-1.62-2.078-.974 0-1.464.589-1.464 1.747V14.1H5.4V8.435c0-1.158.293-2.078.881-2.752.605-.675 1.398-1.022 2.382-1.022 1.139 0 2 .438 2.572 1.314L11.84 6.94l.6-1.005c.572-.876 1.434-1.314 2.572-1.314.984 0 1.776.347 2.382 1.022.586.674.88 1.594.88 2.752z" /></svg>
+                </a>
             </div>
             <div class="sb-meta">
-                <span>build @BuildInfo.Stamp</span>
-                <span><span class="dot">●</span> v2.0</span>
+                <span>build @BuildInfo.BuildDate</span>
+                <span><span class="dot">●</span> v3.0</span>
             </div>
         </div>
     </div>
@@ -69,11 +75,12 @@
 @code {
     private record SectionLink(string Id, string Label, string Idx);
 
+    // Projects deliberately precedes Experience (v3 design).
     private static readonly SectionLink[] Sections =
     {
         new("about",      "About",      "01"),
-        new("experience", "Experience", "02"),
-        new("projects",   "Projects",   "03"),
+        new("projects",   "Projects",   "02"),
+        new("experience", "Experience", "03"),
         new("education",  "Education",  "04"),
         new("skills",     "Skills",     "05"),
         new("interests",  "Interests",  "06"),

@@ -1,23 +1,24 @@
 <section class="sec" id="experience">
     <div class="sec-marker">
-        <span class="num">02</span>
+        <span class="num">03</span>
         <span>Experience</span>
         <span class="rule"></span>
-        <span>@Entries.Length entries</span>
+        <span class="count">@Entries.Length roles</span>
     </div>
 
     <div class="xp-list">
         @foreach (var e in Entries)
         {
             <div class="xp reveal">
+                @* Spaces live inside C# strings: Blazor trims whitespace next to code blocks. *@
                 <div class="when">
-                    @if (e.When.Contains("Now"))
+                    @($"{e.From} → ")@if (e.To is null)
                     {
-                        @(e.When.Replace("Now", ""))<span class="now">Now</span>
+                        <span class="now">now</span>
                     }
                     else
                     {
-                        @e.When
+                        @e.To
                     }
                 </div>
                 <div class="role">
@@ -38,14 +39,17 @@
                         {
                             <span class="tag">@t</span>
                         }
-                        @if (e.Shipped is not null)
-                        {
-                            @foreach (var s in e.Shipped)
-                            {
-                                <span class="tag shipped">↳ @s</span>
-                            }
-                        }
                     </div>
+                    @if (e.Credits is not null)
+                    {
+                        <p class="credits">
+                            @("Shipped from this role: ")
+                            @foreach (var c in e.Credits)
+                            {
+                                <b>@c.Title</b>@($", {c.Detail}. ")
+                            }
+                        </p>
+                    }
                 </div>
             </div>
         }
@@ -53,71 +57,86 @@
 </section>
 
 @code {
+    private record Credit(string Title, string Detail);
+
+    // To = null means the role is current and renders as "now".
     private record Entry(
-        string When,
+        string From,
+        string? To,
         string Role,
         string Company,
         string? Href,
         string Desc,
         string[] Tags,
-        string[]? Shipped = null);
+        Credit[]? Credits = null);
 
     private static readonly Entry[] Entries =
     {
-        new("Mar 2022 — Now",
-            "Software Developer · Gameplay Systems",
+        new("Mar 2022", null,
+            "Gameplay systems programmer",
             "Flying Rat Studio",
             "https://www.flying-rat.studio/",
-            "Architecting and shipping gameplay systems in Unreal Engine (C++). Specialized in multiplayer networking, replication and core mechanics.",
+            "I architect and ship gameplay systems in Unreal Engine with C++ on co-development projects for external studios. Most of my time goes into multiplayer replication and the core mechanics everything else hangs off.",
             new[] { "Unreal", "C++", "Networking" },
-            new[] { "The Last Oricru", "Phantom Fury", "Beat Saber" }),
-        new("Jan 2022 — Now",
-            "Independent Contractor · Full-Stack",
+            new[]
+            {
+                new Credit("The Last Oricru", "gameplay and co-op networking, PC and console"),
+                new Credit("Phantom Fury", "gameplay systems, PC and console"),
+                new Credit("MOTHERGUNSHIP: FORGE", "UE4 to UE5 migration, PC VR and Quest"),
+                new Credit("Beat Saber", "post-launch updates and platform support"),
+                new Credit("Darkest Dungeon: The Fire's Edge", "full DLC implementation, PC"),
+            }),
+        new("Jan 2022", null,
+            "Independent contractor, full stack",
             "Freelance",
             null,
-            "Custom games, prototypes and cross-platform tooling. Godot, Unreal, .NET MAUI, ASP.NET — wherever the brief leads.",
+            "Games, prototypes and cross-platform tooling for clients. Godot and Unreal on the game side, .NET MAUI or ASP.NET when the brief needs an app around it.",
             new[] { "Godot", "Unreal", ".NET MAUI", "ASP.NET" }),
-        new("Jan 2021 — Jan 2022",
-            "Game Programmer · Gameplay & UI",
+        new("Jan 2021", "Jan 2022",
+            "Game programmer, gameplay and UI",
             "Grip Digital",
             "https://www.grip-digital.com/",
-            "Engineered gameplay mechanics and UI systems in Unreal Engine (C++) for PC and console.",
-            new[] { "Unreal", "C++", "UI" }),
-        new("Mar 2019 — Dec 2020",
-            ".NET Programmer · Backend & Cloud",
+            "I wrote gameplay mechanics and UI systems in Unreal Engine with C++ for PC and console releases.",
+            new[] { "Unreal", "C++", "UI" },
+            new[]
+            {
+                new Credit("The Last Oricru", "PC, PS5 and Xbox Series"),
+            }),
+        new("Mar 2019", "Dec 2020",
+            ".NET programmer, backend and cloud",
             "Rationis",
             "https://www.rationis.eu/",
-            "ARC remote-management system on .NET / ASP.NET / Xamarin Forms. Cloud-based architecture on Azure for Quadient Inspire Cloud.",
+            "I built the ARC remote-management system on .NET, ASP.NET and Xamarin Forms, with a cloud architecture on Azure for Quadient Inspire Cloud.",
             new[] { ".NET Core", "Azure", "React", "SQL" }),
-        new("Nov 2017 — Mar 2019",
-            "Junior .NET Programmer · Full-Stack",
+        new("Nov 2017", "Mar 2019",
+            "Junior .NET programmer, full stack",
             "Unicorn",
             "https://unicorn.com/",
-            "Energy-sector software for Nordic markets. Damas project — backend and frontend on Angular, Knockout, ASP.NET.",
+            "Energy-sector software for Nordic markets. I worked both ends of the Damas project: Angular and Knockout on the front, ASP.NET behind it.",
             new[] { ".NET", "Angular", "Knockout" }),
-        new("Jun 2017 — Oct 2018",
-            "Junior Programmer · .NET & Mobile",
+        new("Jun 2017", "Oct 2018",
+            "Junior programmer, .NET and mobile",
             "Profi Credit Czech a.s.",
             null,
-            "Designed and shipped an internal Xamarin app, with WCF services bridging mobile to backend.",
+            "I designed and shipped an internal Xamarin app, with WCF services bridging the mobile client to the backend.",
             new[] { "Xamarin", "WCF", "ASP.NET" }),
-        new("Apr 2017 — Mar 2018",
-            "Linux Administrator",
+        new("Apr 2017", "Mar 2018",
+            "Linux administrator",
             "3N",
             null,
-            "Automated admin tasks; configured Docker, Nomad, Terraform and Ansible across servers.",
+            "Server administration and automation across the fleet with Docker, Nomad, Terraform and Ansible.",
             new[] { "Linux", "Docker", "Ansible" }),
-        new("Aug 2015 — Jan 2017",
-            "Junior Web Developer",
+        new("Aug 2015", "Jan 2017",
+            "Junior web developer",
             "Develox s.r.o",
             null,
-            "Static sites, e-shops and web apps in ASP.NET / C# / HTML.",
+            "Static sites, e-shops and small web apps in ASP.NET and C#.",
             new[] { "ASP.NET", "C#" }),
-        new("Apr 2013 — Mar 2014",
-            "IT Service Technician",
+        new("Apr 2013", "Mar 2014",
+            "IT service technician",
             "VT Data",
             "https://www.vtdata.cz/",
-            "Repaired and maintained computers, laptops, servers and printers. First step into the trade.",
+            "I repaired and maintained computers, laptops, servers and printers. My first paid job in the trade.",
             new[] { "Hardware" }),
     };
 }

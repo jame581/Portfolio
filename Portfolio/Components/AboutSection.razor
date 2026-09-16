@@ -2,51 +2,82 @@
 
 <section class="sec hero" id="about">
     <div class="hero-meta">
-        <span><span class="dot">●</span> Prague, Czech Republic</span>
-        <span>·</span>
+        <span>Prague, Czech Republic</span>
         <span><a href="mailto:jan.mesarc@outlook.com">jan.mesarc@outlook.com</a></span>
-        <span>·</span>
-        <span class="available"><span class="pulse"></span>Open to collaborations · Q3 2026</span>
+        <span class="available"><span class="pulse"></span>Open to collaborations from Q1 2027</span>
     </div>
 
-    <h1 class="display reveal">
-        Jan Mesarc<br />
-        <span class="last">— builds games.</span>
-    </h1>
+    <div class="hero-grid">
+        <div>
+            <h1 class="statement reveal">I build gameplay and <span class="mark">networking</span> systems for games that ship.</h1>
 
-    <p class="hero-tag reveal">
-        Game developer with 5+ years shipping titles in <b>Unreal Engine</b> and <b>Godot</b>.
-        Before games: web apps, mobile, and backend systems across <b>.NET</b>, <b>ASP.NET</b>, and <b>Azure</b>.
-        Currently at <b>Flying Rat Studio</b>, working on gameplay and networking systems.
-    </p>
+            <p class="hero-tag reveal">
+                Unreal Engine and C++ at <b>Flying Rat Studio</b>, on replication and core mechanics.
+                Before games I spent ten years on <b>.NET</b> backends and cloud, which comes in useful
+                more often than I expected.
+            </p>
 
-    <div class="cta-row reveal">
-        <a href="/#projects" class="btn btn-primary"
-           @onclick='() => ScrollTo("projects")' @onclick:preventDefault>
-            View shipped titles <span class="arrow">↓</span>
-        </a>
-        <a href="mailto:jan.mesarc@outlook.com" class="btn">
-            Get in touch <span class="arrow">→</span>
-        </a>
+            <div class="cta-row reveal">
+                <a href="/#projects" class="btn btn-primary"
+                   @onclick='() => ScrollTo("projects")' @onclick:preventDefault>
+                    See the shipped titles <span class="arrow">↓</span>
+                </a>
+                <a href="mailto:jan.mesarc@outlook.com" class="btn">
+                    Get in touch <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <figure class="portrait reveal">
+            <img src="assets/profile1.jpg" alt="Jan Mesarc" />
+            <figcaption>Prague, 2026</figcaption>
+        </figure>
     </div>
 
     <div class="hero-stats reveal">
-        <div>
-            <div class="n">5<span class="unit">+ yrs</span></div>
-            <div class="l">Game development</div>
-        </div>
-        <div>
-            <div class="n">6<span class="unit">titles</span></div>
-            <div class="l">Shipped, professional</div>
-        </div>
-        <div>
-            <div class="n">10<span class="unit">+ yrs</span></div>
-            <div class="l">Software engineering</div>
-        </div>
+        @foreach (var s in Stats)
+        {
+            <div>
+                <div class="n">@s.Value</div>
+                <div class="l">@s.Label</div>
+            </div>
+        }
     </div>
+
+    <dl class="facts reveal">
+        @foreach (var f in Facts)
+        {
+            <div>
+                <dt>@f.Label</dt>
+                <dd>@f.Value</dd>
+            </div>
+        }
+    </dl>
 </section>
 
 @code {
+    private record Stat(string Value, string Label);
+    private record Fact(string Label, string Value);
+
+    private static readonly Stat[] Stats =
+    {
+        new("5",   "Years in games"),
+        new("6",   "Shipped titles"),
+        new("10+", "Years engineering"),
+    };
+
+    private static readonly Fact[] Facts =
+    {
+        new("Based in",           "Prague, Czech Republic"),
+        new("Work authorization", "EU citizen, no sponsorship needed"),
+        new("Setup",              "Hybrid in Prague, or fully remote"),
+        new("Looking for",        "Gameplay or multiplayer programming on PC and console teams"),
+        new("Engagement",         "Full time or contract, from Q1 2027"),
+        new("Notice period",      "Two months"),
+        new("Languages",          "Czech, native. English, professional"),
+        new("Platforms shipped",  "PC, PlayStation, Xbox, Switch, Quest"),
+    };
+
     private async Task ScrollTo(string id)
     {
         await JS.InvokeVoidAsync("BlazorScrollToId", id);

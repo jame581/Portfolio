@@ -58,12 +58,20 @@ function PortfolioScrollStrip(el, dir) {
 
 // Mobile drawer auto-close — closes when viewport widens past 900px or Esc is pressed.
 window.PortfolioDrawer = {
-    bind(dotNetRef) {
+    bind(dotNetRef, toggleElement) {
         const onResize = () => {
-            if (window.innerWidth > 900) dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            if (window.innerWidth > 900) {
+                const drawer = document.querySelector('.sidebar .sb-drawer.open');
+                if (drawer) dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            }
         };
         const onKey = (e) => {
-            if (e.key === 'Escape') dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            if (e.key !== 'Escape' || window.innerWidth > 900) return;
+            const drawer = document.querySelector('.sidebar .sb-drawer.open');
+            if (drawer) {
+                dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+                if (toggleElement) toggleElement.focus();
+            }
         };
         window.addEventListener('resize', onResize);
         window.addEventListener('keydown', onKey);
@@ -72,5 +80,14 @@ window.PortfolioDrawer = {
             window.removeEventListener('keydown', onKey);
         };
     },
-    unbind() { window.PortfolioDrawer._cleanup?.(); }
+    unbind() {
+        window.PortfolioDrawer._cleanup?.();
+        window.PortfolioDrawer._cleanup = null;
+    },
+    focusToggle() {
+        if (window.innerWidth <= 900) {
+            const toggle = document.querySelector('.sb-toggle');
+            if (toggle instanceof HTMLElement) toggle.focus();
+        }
+    }
 };

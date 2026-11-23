@@ -25,14 +25,26 @@ html,body{margin:0;padding:0}
 --fg:#1d272c;--dim:#53636b;--mut:#53636b;
 --sig:#42677f;--sig-soft:rgba(66,103,127,.15);
 --warm:#9b6b2f;--warm-soft:rgba(155,107,47,.18);
+--hero-glow:#fbfcfc;
 --sans:"Geist",ui-sans-serif,system-ui,"Segoe UI",sans-serif;
 --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
 --disp:"Archivo","Helvetica Neue",Helvetica,sans-serif;
 --pad:clamp(20px,4.5vw,72px)}
+:root[data-theme="dark"]{
+--bg:#14191c;--bg2:#1a2226;--bg3:#223038;
+--line:rgba(210,220,225,.12);--line2:rgba(210,220,225,.24);
+--fg:#edf1f1;--dim:#a9b5b9;--mut:#a9b5b9;
+--sig:#8fb8cf;--sig-soft:rgba(143,184,207,.15);
+--warm:#d19a58;--warm-soft:rgba(209,154,88,.18);
+--hero-glow:#1d272c}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark}}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 body::after{content:"";position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.62' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px}
-body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(110% 70% at 18% -10%,#fbfcfc 0%,var(--bg) 60%)}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(110% 70% at 18% -10%,var(--hero-glow) 0%,var(--bg) 60%)}
+:root[data-theme="dark"] body::after{mix-blend-mode:screen;opacity:.025}
 a{color:var(--fg);text-decoration:none}
 a:hover{color:var(--fg)}
 h1,h2,h3,h4,h5{margin:0;font-weight:500;letter-spacing:-.015em}
@@ -75,6 +87,11 @@ main{position:relative;padding:0 var(--pad);width:100%;max-width:1180px}
 .sb-socials a:hover{border-color:var(--fg);color:var(--fg);background:var(--bg2)}
 .sb-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--dim)}
 .dot{color:var(--warm)}
+.sb-theme{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;padding:7px 9px;background:transparent;border:1px solid var(--line);border-radius:2px;color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.sb-theme:hover{border-color:var(--line2);color:var(--fg);background:var(--bg2)}
+.sb-theme-track{position:relative;width:36px;height:18px;border:1px solid var(--line2);border-radius:9px;background:var(--bg3)}
+.sb-theme-thumb{position:absolute;top:3px;left:3px;width:10px;height:10px;border-radius:50%;background:var(--sig);transition:transform .18s ease}
+.sb-theme[aria-pressed="false"] .sb-theme-thumb{transform:translateX(18px)}
 .sb-toggle{display:none}
 .sb-toggle-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
 .sb-toggle-icon{font-size:15px;line-height:1}
@@ -155,7 +172,7 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .project-option.selected .project-option-index{color:var(--sig)}
 .project-option-title{min-width:0}
 .project-panel{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(190px,.85fr);min-width:0;border:1px solid var(--line);border-radius:2px;background:var(--bg2)}
-.project-position{position:absolute;z-index:2;top:10px;right:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--fg);background:rgba(243,245,244,.92);border:1px solid var(--line2);border-radius:2px;padding:4px 7px}
+.project-position{position:absolute;z-index:2;top:10px;right:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--fg);background:color-mix(in oklab,var(--bg) 92%,transparent);border:1px solid var(--line2);border-radius:2px;padding:4px 7px}
 .project-cover{position:relative;overflow:hidden;min-width:0}
 .project-cover img{width:100%;height:100%;min-height:260px;object-fit:cover;filter:saturate(.72) brightness(.88);transition:filter .3s,transform .5s cubic-bezier(.2,.7,.2,1)}
 .project-panel:hover .project-cover img{filter:none;transform:scale(1.025)}

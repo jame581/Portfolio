@@ -1,3 +1,23 @@
+// Theme preference: dark is the portfolio default and the choice persists locally.
+const PortfolioThemeStorageKey = "portfolio-theme";
+function portfolioApplyTheme(theme) {
+    const nextTheme = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = nextTheme;
+    try { localStorage.setItem(PortfolioThemeStorageKey, nextTheme); } catch { }
+}
+function portfolioGetTheme() {
+    try {
+        const saved = localStorage.getItem(PortfolioThemeStorageKey);
+        if (saved === "light" || saved === "dark") return saved;
+    } catch { }
+    return "dark";
+}
+window.PortfolioTheme = {
+    get: portfolioGetTheme,
+    set(theme) { portfolioApplyTheme(theme); }
+};
+portfolioApplyTheme(portfolioGetTheme());
+
 // Smooth-scroll into view by element id. Called from AnchorNavigation and NavMenu.
 function BlazorScrollToId(id) {
     const element = document.getElementById(id);

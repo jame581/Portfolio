@@ -48,12 +48,24 @@ function PortfolioDisposeObservers() {
     _sectionRef = null;
 }
 
-// Filmstrip arrow click — scroll one card width.
-function PortfolioScrollStrip(el, dir) {
-    if (!el) return;
-    const card = el.querySelector('.proj');
-    const w = card ? card.offsetWidth + 14 : 344; // card + .strip gap
-    el.scrollBy({ left: dir * w, behavior: 'smooth' });
+// Move keyboard focus to the selected project tab after Razor changes selection.
+function PortfolioFocusProject(index) {
+    const option = document.querySelector(`.project-option[data-project-index="${index}"]`);
+    if (option instanceof HTMLElement) option.focus();
+}
+
+// Prevent page scrolling only for navigation keys handled by the project selector.
+function PortfolioBindProjectKeys() {
+    const selector = document.querySelector('.project-selector');
+    if (!(selector instanceof HTMLElement) || selector.dataset.projectKeysBound === 'true') return;
+    selector.dataset.projectKeysBound = 'true';
+    selector.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+            || event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            || event.key === 'Home' || event.key === 'End') {
+            event.preventDefault();
+        }
+    });
 }
 
 // Mobile drawer auto-close — closes when viewport widens past 900px or Esc is pressed.

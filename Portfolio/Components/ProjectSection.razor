@@ -11,40 +11,48 @@
     <h2>Professional</h2>
     <p class="lede" style="margin-top:6px">Commercial titles I have contributed to as a gameplay or systems programmer.</p>
 
-    <div class="strip-controls">
-        <span class="count">@ShippedTitles.Length titles, scroll sideways</span>
-        <div class="nav">
-            <button type="button" aria-label="Previous" @onclick="() => Scroll(-1)">‹</button>
-            <button type="button" aria-label="Next" @onclick="() => Scroll(1)">›</button>
-        </div>
-    </div>
-
-    <div class="strip-wrap">
-        <div class="strip" @ref="stripEl">
-            @foreach (var p in ShippedTitles)
+    <div class="project-explorer">
+        <div class="project-selector" role="tablist" aria-label="Shipped projects" @onkeydown="HandleProjectKey">
+            @for (var i = 0; i < ShippedTitles.Length; i++)
             {
-                <article class="proj">
-                    <div class="cover">
-                        <img src="@p.Img" alt="@p.Title" loading="lazy" />
-                        <span class="badge">@p.Badge</span>
-                    </div>
-                    <div class="body">
-                        <div class="pmeta">
-                            <span class="yr">@p.Year</span>
-                            <span>@p.Platforms</span>
-                        </div>
-                        <h4>@p.Title</h4>
-                        <p class="desc">@p.Desc</p>
-                        <div class="links">
-                            @foreach (var l in p.Links)
-                            {
-                                <a href="@l.Href" target="_blank" rel="noopener">@l.Label ↗</a>
-                            }
-                        </div>
-                    </div>
-                </article>
+                var projectIndex = i;
+                var project = ShippedTitles[projectIndex];
+                <button type="button"
+                        class="project-option @(projectIndex == _selectedProjectIndex ? "selected" : null)"
+                        role="tab"
+                        aria-selected="@(projectIndex == _selectedProjectIndex)"
+                        aria-controls="selected-project-panel"
+                        id="project-tab-@projectIndex"
+                        data-project-index="@projectIndex"
+                        tabindex="@(projectIndex == _selectedProjectIndex ? 0 : -1)"
+                        @onclick="() => SelectProject(projectIndex)">
+                    <span class="project-option-index">@((projectIndex + 1).ToString("D2"))</span>
+                    <span class="project-option-title">@project.Title</span>
+                </button>
             }
         </div>
+
+        <article class="project-panel" id="selected-project-panel" role="tabpanel" aria-labelledby="project-tab-@_selectedProjectIndex" aria-live="polite">
+            <div class="project-position">@((_selectedProjectIndex + 1).ToString("D2")) / @ShippedTitles.Length.ToString("D2")</div>
+            <div class="project-cover">
+                <img src="@SelectedProject.Img" alt="@SelectedProject.Title" loading="lazy" />
+                <span class="badge">@SelectedProject.Badge</span>
+            </div>
+            <div class="project-details">
+                <div class="pmeta">
+                    <span class="yr">@SelectedProject.Year</span>
+                    <span>@SelectedProject.Platforms</span>
+                </div>
+                <h4>@SelectedProject.Title</h4>
+                <p class="desc">@SelectedProject.Desc</p>
+                <div class="links">
+                    @foreach (var l in SelectedProject.Links)
+                    {
+                        <a href="@l.Href" target="_blank" rel="noopener">@l.Label ↗</a>
+                    }
+                </div>
+            </div>
+        </article>
     </div>
 
     <h2 style="margin-top:clamp(44px,5vw,64px)">Jams and experiments</h2>
@@ -69,10 +77,38 @@
 </section>
 
 @code {
-    private ElementReference stripEl;
+    private int _selectedProjectIndex;
 
-    private async Task Scroll(int dir) =>
-        await JS.InvokeVoidAsync("PortfolioScrollStrip", stripEl, dir);
+    private Shipped SelectedProject => ShippedTitles[_selectedProjectIndex];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("PortfolioBindProjectKeys");
+    }
+
+    private void SelectProject(int index)
+    {
+        _selectedProjectIndex = Math.Clamp(index, 0, ShippedTitles.Length - 1);
+    }
+
+    private async Task HandleProjectKey(KeyboardEventArgs e)
+    {
+        var nextIndex = e.Key switch
+        {
+            "ArrowUp" or "ArrowLeft" => _selectedProjectIndex - 1,
+            "ArrowDown" or "ArrowRight" => _selectedProjectIndex + 1,
+            "Home" => 0,
+            "End" => ShippedTitles.Length - 1,
+            _ => _selectedProjectIndex
+        };
+
+        if (nextIndex == _selectedProjectIndex && e.Key is not ("Home" or "End"))
+            return;
+
+        SelectProject(nextIndex);
+        await JS.InvokeVoidAsync("PortfolioFocusProject", _selectedProjectIndex);
+    }
 
     private record Shipped(string Title, string Year, string Platforms, string Badge, string Img,
                            string Desc, ProjectLink[] Links);

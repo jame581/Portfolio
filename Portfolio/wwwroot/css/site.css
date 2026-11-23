@@ -5,7 +5,6 @@
    ========================================================= */
 
 /* ---------- Blazor host UI ---------- */
-h1:focus{outline:none}
 #blazor-error-ui{background:lightyellow;color:#111;bottom:0;box-shadow:0 -1px 2px rgba(0,0,0,.2);display:none;left:0;padding:.6rem 1.25rem .7rem 1.25rem;position:fixed;width:100%;z-index:1000}
 #blazor-error-ui a{color:#111;text-decoration:underline}
 #blazor-error-ui .dismiss{cursor:pointer;position:absolute;right:.75rem;top:.5rem}
@@ -44,7 +43,7 @@ img{display:block;max-width:100%}
 .mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.pulse{animation:none}.project-panel:hover .project-cover img{transform:none}.page{animation:none}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}html{scroll-behavior:auto}}
 
 /* ---------- shell ---------- */
 .app{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100vh}
@@ -167,7 +166,8 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .project-details h4{font-size:18px;line-height:1.24}
 .project-details .desc{margin:0;color:var(--dim);font-size:14px}
 .project-details .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
-.project-details .links a{min-height:36px;display:inline-flex;align-items:center}
+.project-details .links a{min-height:44px;display:inline-flex;align-items:center}
+.project-details h4,.project-details .desc,.itch-card h5,.itch-card p,.repo .name,.repo p{overflow-wrap:anywhere}
 .project-details .links a:hover{color:var(--sig)}
 .itch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px;margin-top:20px}
 .itch-card{border:1px solid var(--line);border-radius:2px;padding:15px 16px 13px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s,background .2s}
@@ -239,9 +239,9 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .app{grid-template-columns:minmax(0,1fr)}
 .sidebar{position:sticky;top:0;z-index:50;height:auto;flex-direction:column;gap:0;padding:12px var(--pad);border-right:0;border-bottom:1px solid var(--line);backdrop-filter:blur(10px);background:color-mix(in oklab,var(--bg) 88%,transparent)}
 .sb-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.sb-brand{grid-template-columns:36px minmax(0,1fr);gap:10px}
+.sb-brand{grid-template-columns:36px minmax(0,1fr);gap:10px;min-height:44px}
 .sb-brand img{width:36px;height:36px}
-.sb-toggle{display:flex;align-items:center;justify-content:center;gap:7px;min-width:76px;height:40px;padding:0 10px;background:none;border:1px solid var(--line);border-radius:2px;color:var(--fg);cursor:pointer}
+.sb-toggle{display:flex;align-items:center;justify-content:center;gap:7px;min-width:76px;height:44px;padding:0 10px;background:none;border:1px solid var(--line);border-radius:2px;color:var(--fg);cursor:pointer}
 .sb-toggle-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
 .sb-toggle-icon{font-size:15px;line-height:1}
 .sb-drawer{display:none;gap:18px;padding:18px 0 6px;flex:0 1 auto;max-height:calc(100vh - 96px);overflow-y:auto}
@@ -259,6 +259,7 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .skill-block .label{padding-top:0}
 }
 @media (max-width:600px){
+.repo-search{min-height:44px}
 .repo-search{width:100%}
 .repo{grid-template-columns:minmax(0,1fr)}
 .repo .right{display:none}
@@ -277,4 +278,7 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .hero-stats>div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
 .cta-row .btn{flex:1 1 100%;justify-content:space-between}
 .statement{font-size:clamp(30px,8.6vw,40px)}
+.sec-marker{gap:10px;font-size:10px}
+.sec-marker a{min-height:44px;display:inline-flex;align-items:center}
+.project-details .links a{min-height:44px}
 }

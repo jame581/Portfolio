@@ -13,6 +13,10 @@ function initScrollReveal() {
     if (_revealObserver) _revealObserver.disconnect();
     const els = document.querySelectorAll('.reveal');
     if (els.length === 0) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach((el) => el.classList.add('in'));
+        return;
+    }
     _revealObserver = new IntersectionObserver((entries) => {
         for (const e of entries) {
             if (e.isIntersecting) {

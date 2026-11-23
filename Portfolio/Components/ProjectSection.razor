@@ -22,6 +22,8 @@
                         role="tab"
                         aria-selected="@(projectIndex == _selectedProjectIndex)"
                         aria-controls="selected-project-panel"
+                        aria-posinset="@(projectIndex + 1)"
+                        aria-setsize="@ShippedTitles.Length"
                         id="project-tab-@projectIndex"
                         data-project-index="@projectIndex"
                         tabindex="@(projectIndex == _selectedProjectIndex ? 0 : -1)"
@@ -94,10 +96,11 @@
 
     private async Task HandleProjectKey(KeyboardEventArgs e)
     {
+        var projectCount = ShippedTitles.Length;
         var nextIndex = e.Key switch
         {
-            "ArrowUp" or "ArrowLeft" => _selectedProjectIndex - 1,
-            "ArrowDown" or "ArrowRight" => _selectedProjectIndex + 1,
+            "ArrowUp" or "ArrowLeft" => (_selectedProjectIndex - 1 + projectCount) % projectCount,
+            "ArrowDown" or "ArrowRight" => (_selectedProjectIndex + 1) % projectCount,
             "Home" => 0,
             "End" => ShippedTitles.Length - 1,
             _ => _selectedProjectIndex

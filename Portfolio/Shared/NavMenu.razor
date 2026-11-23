@@ -32,6 +32,7 @@
             {
                 <a href="/#@item.Id"
                    class="@(IsHomeRoute && activeSection == item.Id ? "active" : null)"
+                   aria-current="@(IsHomeRoute && activeSection == item.Id ? "location" : null)"
                    @onclick="() => GoSection(item.Id)" @onclick:preventDefault>
                     <span class="idx">@item.Idx</span>
                     <span>@item.Label</span>

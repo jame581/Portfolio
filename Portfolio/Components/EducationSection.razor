@@ -7,10 +7,14 @@
     </div>
 
     <div class="edu-list">
-        @foreach (var e in Entries)
+        @for (var i = 0; i < Entries.Length; i++)
         {
+            var e = Entries[i];
             <div class="edu reveal">
-                <div class="when">@e.When</div>
+                <div class="edu-meta">
+                    <span class="edu-index">ED @((i + 1).ToString("D2"))</span>
+                    <div class="when">@e.When</div>
+                </div>
                 <div>
                     <h3>@e.School</h3>
                     <div class="deg">@e.Degree</div>

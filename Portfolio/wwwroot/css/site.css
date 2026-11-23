@@ -131,8 +131,11 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 /* ---------- experience ---------- */
 .xp{display:grid;grid-template-columns:158px minmax(0,1fr);gap:clamp(16px,2.5vw,34px);padding:26px 0;border-top:1px solid var(--line)}
 .xp:first-child{border-top:0;padding-top:0}
+.xp-meta{display:flex;flex-direction:column;gap:8px;min-width:0}
+.xp-index{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--sig)}
 .when{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--dim);padding-top:5px;white-space:nowrap}
 .when .now{color:var(--sig)}
+.role{min-width:0}
 .xp h3{font-size:19px}
 .co{font-size:14px;color:var(--dim);margin-top:2px}
 .co a{border-bottom:1px solid var(--line2);padding-bottom:1px}
@@ -179,25 +182,28 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 /* ---------- education ---------- */
 .edu{display:grid;grid-template-columns:158px minmax(0,1fr);gap:clamp(16px,2.5vw,34px);padding:26px 0;border-top:1px solid var(--line)}
 .edu:first-child{border-top:0;padding-top:0}
+.edu-meta{display:flex;flex-direction:column;gap:8px;min-width:0}
+.edu-index{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--sig)}
 .edu h3{font-size:18px}
 .deg{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--sig);margin-top:4px}
 .edu p{color:var(--dim);margin-top:10px;max-width:66ch;font-size:15.5px}
 
 /* ---------- skills ---------- */
+.skills-lede,.interests-lede{margin-bottom:26px}
 .skill-block{padding:20px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:158px minmax(0,1fr);gap:clamp(16px,2.5vw,34px)}
 .skill-block:first-child{border-top:0;padding-top:0}
-.skill-block .label{display:flex;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding-top:4px}
-.skill-block .label .num{color:var(--dim)}
+.skill-block .label{display:flex;gap:9px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding-top:4px}
+.skill-block .label .num{color:var(--sig)}
 .skill-list{display:flex;flex-wrap:wrap;gap:8px}
-.chip{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:2px;padding:6px 10px;font-size:13.5px;color:var(--fg)}
-.ticks{display:flex;gap:2px}
+.chip{display:inline-flex;align-items:center;gap:10px;min-height:34px;max-width:100%;border:1px solid var(--line);border-radius:2px;padding:6px 10px;font-size:13.5px;color:var(--fg);background:color-mix(in oklab,var(--bg) 88%,var(--bg2))}
+.ticks{display:flex;gap:2px;flex-shrink:0}
 .ticks i{width:5px;height:5px;background:var(--line2)}
 .ticks i.on{background:var(--fg)}
 .skill-note{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;color:var(--dim);margin-top:22px}
 
 /* ---------- interests ---------- */
 .interests-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.interest{background:var(--bg);padding:18px 18px 20px}
+.interest{min-width:0;background:var(--bg);padding:18px 18px 20px}
 @media (min-width:760px){.interests-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .interest .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .interest .v{margin-top:7px;font-size:15.5px}
@@ -248,6 +254,7 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .hero-grid{grid-template-columns:minmax(0,1fr)}
 .portrait{max-width:260px}
 .xp,.edu,.skill-block{grid-template-columns:minmax(0,1fr);gap:10px}
+.xp-meta,.edu-meta{flex-direction:row;align-items:center;gap:12px}
 .when{padding-top:0}
 .skill-block .label{padding-top:0}
 }

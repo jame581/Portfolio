@@ -7,19 +7,23 @@
     </div>
 
     <div class="xp-list">
-        @foreach (var e in Entries)
+        @for (var i = 0; i < Entries.Length; i++)
         {
+            var e = Entries[i];
             <div class="xp reveal">
                 @* Spaces live inside C# strings: Blazor trims whitespace next to code blocks. *@
-                <div class="when">
-                    @($"{e.From} → ")@if (e.To is null)
-                    {
-                        <span class="now">now</span>
-                    }
-                    else
-                    {
-                        @e.To
-                    }
+                <div class="xp-meta">
+                    <span class="xp-index">XP @((i + 1).ToString("D2"))</span>
+                    <div class="when">
+                        @($"{e.From} → ")@if (e.To is null)
+                        {
+                            <span class="now">now</span>
+                        }
+                        else
+                        {
+                            @e.To
+                        }
+                    </div>
                 </div>
                 <div class="role">
                     <h3>@e.Role</h3>

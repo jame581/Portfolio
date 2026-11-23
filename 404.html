@@ -13,28 +13,38 @@
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Jan Mesarc, gameplay and networking programmer</title>
-    <meta name="description" content="Jan Mesarc is a gameplay and networking programmer in Prague, working in Unreal Engine and C++ at Flying Rat Studio. Shipped credits include The Last Oricru, Phantom Fury, MOTHERGUNSHIP: FORGE and Beat Saber." />
+    <title>Jan Mesarc, game developer specializing in gameplay and multiplayer</title>
+    <meta name="description" content="Jan Mesarc is a game developer in Prague, specializing in gameplay and multiplayer systems with Unreal Engine and C++. Shipped credits include The Last Oricru, Phantom Fury, MOTHERGUNSHIP: FORGE and Beat Saber." />
     <meta name="author" content="Jan Mesarc" />
     <link rel="canonical" href="https://janmesarc.online/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://janmesarc.online/" />
-    <meta property="og:title" content="Jan Mesarc, gameplay and networking programmer" />
-    <meta property="og:description" content="Unreal Engine and C++ gameplay and multiplayer programmer in Prague. Shipped PC, console and VR titles." />
+    <meta property="og:title" content="Jan Mesarc, game developer specializing in gameplay and multiplayer" />
+    <meta property="og:description" content="Unreal Engine and C++ gameplay and multiplayer systems in Prague. Shipped PC, console and VR titles." />
     <!-- Social card source: tools/og-card (re-render with render.ps1 after editing) -->
     <meta property="og:image" content="https://janmesarc.online/assets/og-card.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Jan Mesarc: I build gameplay and networking systems for games that ship. 6 shipped titles on PC, console and VR." />
+    <meta property="og:image:alt" content="Jan Mesarc, game developer: I build gameplay and multiplayer systems for games that ship. 6 shipped titles on PC, console and VR." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@jame581" />
-    <meta name="twitter:image:alt" content="Jan Mesarc: I build gameplay and networking systems for games that ship. 6 shipped titles on PC, console and VR." />
+    <meta name="twitter:image:alt" content="Jan Mesarc, game developer: I build gameplay and multiplayer systems for games that ship. 6 shipped titles on PC, console and VR." />
     <base href="/" />
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Geist:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script>
+        (() => {
+            let theme = "dark";
+            try {
+                const saved = localStorage.getItem("portfolio-theme");
+                if (saved === "light" || saved === "dark") theme = saved;
+            } catch { }
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
     <!-- CSS -->
     <link href="css/site.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="favicon.png" />

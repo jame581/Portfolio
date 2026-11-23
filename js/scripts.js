@@ -1,3 +1,23 @@
+// Theme preference: dark is the portfolio default and the choice persists locally.
+const PortfolioThemeStorageKey = "portfolio-theme";
+function portfolioApplyTheme(theme) {
+    const nextTheme = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = nextTheme;
+    try { localStorage.setItem(PortfolioThemeStorageKey, nextTheme); } catch { }
+}
+function portfolioGetTheme() {
+    try {
+        const saved = localStorage.getItem(PortfolioThemeStorageKey);
+        if (saved === "light" || saved === "dark") return saved;
+    } catch { }
+    return "dark";
+}
+window.PortfolioTheme = {
+    get: portfolioGetTheme,
+    set(theme) { portfolioApplyTheme(theme); }
+};
+portfolioApplyTheme(portfolioGetTheme());
+
 // Smooth-scroll into view by element id. Called from AnchorNavigation and NavMenu.
 function BlazorScrollToId(id) {
     const element = document.getElementById(id);
@@ -13,6 +33,10 @@ function initScrollReveal() {
     if (_revealObserver) _revealObserver.disconnect();
     const els = document.querySelectorAll('.reveal');
     if (els.length === 0) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach((el) => el.classList.add('in'));
+        return;
+    }
     _revealObserver = new IntersectionObserver((entries) => {
         for (const e of entries) {
             if (e.isIntersecting) {
@@ -48,22 +72,42 @@ function PortfolioDisposeObservers() {
     _sectionRef = null;
 }
 
-// Filmstrip arrow click — scroll one card width.
-function PortfolioScrollStrip(el, dir) {
-    if (!el) return;
-    const card = el.querySelector('.proj');
-    const w = card ? card.offsetWidth + 14 : 344; // card + .strip gap
-    el.scrollBy({ left: dir * w, behavior: 'smooth' });
+// Move keyboard focus to the selected project tab after Razor changes selection.
+function PortfolioFocusProject(index) {
+    const option = document.querySelector(`.project-option[data-project-index="${index}"]`);
+    if (option instanceof HTMLElement) option.focus();
+}
+
+// Prevent page scrolling only for navigation keys handled by the project selector.
+function PortfolioBindProjectKeys() {
+    const selector = document.querySelector('.project-selector');
+    if (!(selector instanceof HTMLElement) || selector.dataset.projectKeysBound === 'true') return;
+    selector.dataset.projectKeysBound = 'true';
+    selector.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+            || event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            || event.key === 'Home' || event.key === 'End') {
+            event.preventDefault();
+        }
+    });
 }
 
 // Mobile drawer auto-close — closes when viewport widens past 900px or Esc is pressed.
 window.PortfolioDrawer = {
-    bind(dotNetRef) {
+    bind(dotNetRef, toggleElement) {
         const onResize = () => {
-            if (window.innerWidth > 900) dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            if (window.innerWidth > 900) {
+                const drawer = document.querySelector('.sidebar .sb-drawer.open');
+                if (drawer) dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            }
         };
         const onKey = (e) => {
-            if (e.key === 'Escape') dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+            if (e.key !== 'Escape' || window.innerWidth > 900) return;
+            const drawer = document.querySelector('.sidebar .sb-drawer.open');
+            if (drawer) {
+                dotNetRef.invokeMethodAsync('CloseDrawerFromJs');
+                if (toggleElement) toggleElement.focus();
+            }
         };
         window.addEventListener('resize', onResize);
         window.addEventListener('keydown', onKey);
@@ -72,5 +116,14 @@ window.PortfolioDrawer = {
             window.removeEventListener('keydown', onKey);
         };
     },
-    unbind() { window.PortfolioDrawer._cleanup?.(); }
+    unbind() {
+        window.PortfolioDrawer._cleanup?.();
+        window.PortfolioDrawer._cleanup = null;
+    },
+    focusToggle() {
+        if (window.innerWidth <= 900) {
+            const toggle = document.querySelector('.sb-toggle');
+            if (toggle instanceof HTMLElement) toggle.focus();
+        }
+    }
 };

@@ -12,7 +12,7 @@
     <p class="lede" style="margin-top:6px">Commercial titles I have contributed to as a gameplay or systems programmer.</p>
 
     <div class="project-explorer">
-        <div class="project-selector" role="tablist" aria-label="Shipped projects" @onkeydown="HandleProjectKey">
+        <div class="project-selector" role="tablist" aria-label="Shipped projects" aria-orientation="vertical" @onkeydown="HandleProjectKey">
             @for (var i = 0; i < ShippedTitles.Length; i++)
             {
                 var projectIndex = i;

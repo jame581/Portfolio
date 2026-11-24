@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Personal portfolio site (single long page + a `/fetchgithubdata` sub-page) built as a **.NET 10 Blazor WebAssembly client-side** app. Deployed as a static site to GitHub Pages at `janmesarc.online`.
+Personal portfolio site (single long page + a `/fetchgithubdata` sub-page) built as a **.NET 11 Blazor WebAssembly client-side** app. Deployed as a static site to GitHub Pages at `janmesarc.online`.
 
 There are **no tests** in this repo — no test project, no test framework wired up. Don't claim "tests pass" as verification; use `dotnet build` and manual browser testing instead. The build is warning-free, so any new warning came from your change.
 

@@ -269,7 +269,7 @@ h2{font-family:var(--disp);font-variation-settings:"wdth" 92,"wght" 600;font-siz
 .sb-socials a svg{width:16px;height:16px}
 .sb-foot{margin-top:4px}
 .hero-grid{grid-template-columns:minmax(0,1fr)}
-.portrait{max-width:260px}
+.portrait{max-width:260px;width:100%;margin:0 auto 40px}
 .xp,.edu,.skill-block{grid-template-columns:minmax(0,1fr);gap:10px}
 .xp-meta,.edu-meta{flex-direction:row;align-items:center;gap:12px}
 .when{padding-top:0}
